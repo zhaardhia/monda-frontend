@@ -1,9 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
+import bg from '../../../public/bg-monda.png'
 
 const HomeSection = () => {
   return (
-    <div id="home-section" className="h-[40rem] flex items-center">
+    <div id="home-section" className="h-[50rem] flex items-center"
+      style={{
+        backgroundImage: `url(${bg.src})`,
+        // objectFit: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        backgroundSize: "cover"
+        // width: '100%',
+        // height: '100%',
+      }}
+    >
       <div className="flex w-[85%] mx-auto justify-evenly">
         <div className="flex flex-col gap-5 my-auto">
           <p className="text-2xl text-[#A88653]">Halo Monders, selamat datang di</p>
