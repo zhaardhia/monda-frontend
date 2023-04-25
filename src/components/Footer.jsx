@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 const Footer = () => {
   return (
     <footer className="bg-[#294456] text-white">
-      <div className="flex justify-around p-10">
+      <div className="flex justify-around p-10 md:flex-row flex-col">
         <div className="w-[15rem]">
           <h1>OUR SOCIAL MEDIA</h1>
           <hr className="text-[#A88653] my-4" />
@@ -26,7 +26,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="w-[15rem]">
           <div className="flex gap-2 items-center">
             <h1>CONTACT US</h1>
             <Icon icon="material-symbols:phone-in-talk-outline" width={20} />

@@ -16,8 +16,8 @@ const WhyUs = () => {
       }}
     >
       <h2 className="text-4xl text-center">Why Us?</h2>
-      <div className="flex justify-center gap-14 my-28">
-        <div className="w-[20rem] flex flex-col gap-5">
+      <div className="flex justify-center md:flex-row flex-col md:mx-0 mx-auto lg:gap-14 sm:gap-10 my-28">
+        <div className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5">
           <Image
             src="/star.png"
             alt="great quality"
@@ -30,7 +30,7 @@ const WhyUs = () => {
             Produk makanan yang kami jual dipastikan fresh dan memiliki mutu yang baik
           </div>
         </div>
-        <div className="w-[20rem] flex flex-col gap-5">
+        <div className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5">
           <Image
             src="/value-money.png"
             alt="value for money"
@@ -43,7 +43,7 @@ const WhyUs = () => {
             Dapatkan produk yang bernilai tinggi dengan harga yang bersaing di pasaran
           </div>
         </div>
-        <div className="w-[20rem] flex flex-col gap-5">
+        <div className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5">
           <Image
             src="/fast-deliv.png"
             alt="Fast Delivery"
@@ -53,7 +53,7 @@ const WhyUs = () => {
           />
           <h4 className="text-center text-2xl">Fast Delivery</h4>
           <div className="bg-slate-200 rounded-xl p-5 text-xl font-light">
-            kami akan memastikan setiap pesanan yang terkonfirmasi akan dikirim oleh staf kami sesegera mungkin
+            Kami akan memastikan setiap pesanan yang terkonfirmasi akan dikirim oleh staf kami sesegera mungkin
           </div>
         </div>
       </div>
