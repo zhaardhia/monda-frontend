@@ -4,6 +4,7 @@ import Layout from '@/components/Layout'
 import HomeSection from '@/components/LandingPage/HomeSection'
 import MondaInfo from '@/components/LandingPage/MondaInfo'
 import WhyUs from '@/components/LandingPage/WhyUs'
+import AboutUs from '@/components/LandingPage/AboutUs'
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       <HomeSection />
       <MondaInfo />
       <WhyUs />
-      <h1>tes</h1>
+      <AboutUs />
     </Layout>
   )
 }
