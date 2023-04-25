@@ -23,7 +23,7 @@ function Nav() {
                 <Link href="#home-section" scroll={false}
                   className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >Home</Link>
-                <Link href="/" 
+                <Link href="#about-us" 
                   className="text-[#A88653] hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >About Us</Link>
                 <Link href="/"
@@ -104,7 +104,7 @@ function Nav() {
                 <Link href="#home-section"
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Home</Link>
-                <Link href="/" 
+                <Link href="#about-us" 
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >About Us</Link>
                 <Link href="/"

@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 const MondaInfo = () => {
   return (
-    <div>
+    <div id="monda-info">
       <div className="flex justify-center items-center mt-10">
         <hr className="w-[100%]" />
         <Image

@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const AboutUs = () => {
   return (
-    <div className="lg:w-[80%] w-[90%] mx-auto flex flex-col gap-10 my-20">
+    <div id="about-us" className="lg:w-[80%] w-[90%] mx-auto flex flex-col gap-10 my-20">
       <div className="flex justify-center items-center">
         <hr className="w-[100%]" />
         <Image

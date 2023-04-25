@@ -4,7 +4,7 @@ import bg from '../../../public/bg-monda.png'
 
 const WhyUs = () => {
   return (
-    <div className="flex flex-col py-10"
+    <div id="why-us" className="flex flex-col py-10"
       style={{
         backgroundImage: `url(${bg.src})`,
         // objectFit: "cover",
