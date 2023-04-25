@@ -4,7 +4,7 @@ import Link from 'next/link'
 const MondaInfo = () => {
   return (
     <div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mt-10">
         <hr className="w-[100%]" />
         <Image
           src="/monda_logo.png"
@@ -27,7 +27,7 @@ const MondaInfo = () => {
           <Link href="/" className="p-3 bg-[#DE5959] text-white rounded-lg">Shop Now</Link>
         </div>
       </div>
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center mb-10">
         <hr className="w-[100%]" />
         <Image
           src="/monda_logo.png"

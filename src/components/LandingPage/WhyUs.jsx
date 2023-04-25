@@ -57,16 +57,6 @@ const WhyUs = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center items-center">
-        <hr className="w-[100%]" />
-        <Image
-          src="/monda_logo.png"
-          alt="Monda Logo"
-          width={70}
-          height={70}
-        />
-        <hr className="w-[100%]" />
-      </div>
     </div>
   )
 }

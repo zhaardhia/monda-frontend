@@ -3,7 +3,17 @@ import Image from 'next/image'
 
 const AboutUs = () => {
   return (
-    <div className="lg:w-[80%] w-[90%] mx-auto flex flex-col gap-10 my-10">
+    <div className="lg:w-[80%] w-[90%] mx-auto flex flex-col gap-10 my-20">
+      <div className="flex justify-center items-center">
+        <hr className="w-[100%]" />
+        <Image
+          src="/monda_logo.png"
+          alt="Monda Logo"
+          width={70}
+          height={70}
+        />
+        <hr className="w-[100%]" />
+      </div>
       <h1 className="text-center text-4xl">About Us</h1>
       <Image 
         src="/ikanroa_aboutus.png"
