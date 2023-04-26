@@ -1,9 +1,18 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { motion, useAnimation, Variants } from 'framer-motion'
+import { animateFromLeft, animateFromRight, animateFromAboveSlower, animateOpacity } from '../../animations/animationFade'
+
 const MondaInfo = () => {
   return (
-    <div id="monda-info">
+    <motion.div id="monda-info"
+      initial={"offscreen"}
+      whileInView={"onscreen"}
+      viewport={{once:true}}
+      transition={{staggerChildren:0.5}}
+      variants={animateOpacity}
+    >
       <div className="flex justify-center items-center mt-10">
         <hr className="w-[100%]" />
         <Image
@@ -37,7 +46,7 @@ const MondaInfo = () => {
         />
         <hr className="w-[100%]" />
       </div>
-    </div>
+    </motion.div>
   )
 }
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import bg from '../../../public/bg-monda.png'
+import { motion, useAnimation, Variants } from 'framer-motion'
+import { animateFromLeft, animateFromRight, animateFromAboveSlower, animateOpacity } from '../../animations/animationFade'
 
 const WhyUs = () => {
   return (
@@ -17,7 +19,14 @@ const WhyUs = () => {
     >
       <h2 className="text-4xl text-center">Why Us?</h2>
       <div className="flex justify-center md:flex-row flex-col md:mx-0 mx-auto lg:gap-14 sm:gap-10 my-28">
-        <div className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5">
+        <motion.div 
+          className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5"
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{once:true}}
+          transition={{staggerChildren:0.5}}
+          variants={animateFromLeft}
+        >
           <Image
             src="/star.png"
             alt="great quality"
@@ -29,8 +38,15 @@ const WhyUs = () => {
           <div className="bg-slate-200 rounded-xl p-5 text-xl font-light">
             Produk makanan yang kami jual dipastikan fresh dan memiliki mutu yang baik
           </div>
-        </div>
-        <div className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5">
+        </motion.div>
+        <motion.div 
+          className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5"
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{once:true}}
+          transition={{staggerChildren:0.5}}
+          variants={animateOpacity}
+        >
           <Image
             src="/value-money.png"
             alt="value for money"
@@ -42,8 +58,15 @@ const WhyUs = () => {
           <div className="bg-slate-200 rounded-xl p-5 text-xl font-light">
             Dapatkan produk yang bernilai tinggi dengan harga yang bersaing di pasaran
           </div>
-        </div>
-        <div className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5">
+        </motion.div>
+        <motion.div 
+          className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5"
+          initial={"offscreen"}
+          whileInView={"onscreen"}
+          viewport={{once:true}}
+          transition={{staggerChildren:0.5}}
+          variants={animateFromRight}
+        >
           <Image
             src="/fast-deliv.png"
             alt="Fast Delivery"
@@ -55,7 +78,7 @@ const WhyUs = () => {
           <div className="bg-slate-200 rounded-xl p-5 text-xl font-light">
             Kami akan memastikan setiap pesanan yang terkonfirmasi akan dikirim oleh staf kami sesegera mungkin
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   )
