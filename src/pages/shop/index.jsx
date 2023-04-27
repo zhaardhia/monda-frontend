@@ -2,6 +2,7 @@ import React from 'react'
 import LayoutShop from '@/components/LayoutShop'
 import BannerWelcome from '@/components/ShopCatalogue/BannerWelcome'
 import SearchBar from '@/components/SearchBar'
+import CatalogueContainer from '@/components/ShopCatalogue/CatalogueContainer'
 
 const ShopIndex = () => {
   return (
@@ -17,6 +18,7 @@ const ShopIndex = () => {
           <p className="text-xl">Our Products</p>
           <hr className="w-[30%]" />
         </div>
+        <CatalogueContainer />
       </div>
     </LayoutShop>
   )
