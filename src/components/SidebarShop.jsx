@@ -51,7 +51,7 @@ const SidebarShop = () => {
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Link href="/shop/my-order" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <Icon icon="mdi:credit-card-fast-outline" width={30} className="text-slate-100" />
               </Link>
             </li>
