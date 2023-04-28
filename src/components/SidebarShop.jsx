@@ -36,17 +36,17 @@ const SidebarShop = () => {
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
-              <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Link href="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <Icon icon="material-symbols:home" width={30} className="text-slate-100" />
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Link href="/shop" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <Icon icon="mingcute:shopping-bag-1-fill" width={30} className="text-slate-100" />
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Link href="/shop/shopping-cart" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <Icon icon="material-symbols:shopping-cart-outline" width={30} className="text-slate-100" />
               </Link>
             </li>
