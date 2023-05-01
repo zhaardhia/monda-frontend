@@ -8,7 +8,7 @@ const LayoutShop = ({ children }) => {
     <>
       <SidebarShop />
       <div className="absolute right-5 top-2">
-        <Link href="" className="">
+        <Link href="/profile" className="">
           <Icon icon="gg:profile" width={30} />
         </Link>
       </div>
