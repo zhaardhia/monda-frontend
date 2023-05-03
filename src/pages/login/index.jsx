@@ -3,14 +3,39 @@ import Layout from '@/components/Layout'
 import bg from '../../../public/bg-monda.png'
 import Image from 'next/image'
 import Link from 'next/link'
+import { login } from '@/service/data'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { motion } from 'framer-motion'
+import { animateVibrate } from '../../animations/animationFade'
 
 const Login = () => {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [msgError, setMsgError] = useState(null)
 
   const submitUser = async () => {
     console.log("tes")
-    console.log({ firstName, lastName, email, password, confPassword })
+    console.log({ email, password })
+    console.log(process.env.NEXT_PUBLIC_BASE_URL)
+    try {
+      // axios.defaults.withCredentials = true
+      await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/login-user`, {
+          email,
+          password
+        },
+        {
+          withCredentials: true,
+          headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+        }
+      )
+      setMsgError(null)
+      router.push('/shop')
+    } catch (error) {
+      console.error(error.response.data.message)
+      setMsgError(error.response.data.message)
+    }
   }
 
   return (
@@ -49,6 +74,15 @@ const Login = () => {
                   <Link href="/forgot-password" className="text-white underline">Lupa kata sandi?</Link>
                 </div>
               </div>
+              <motion.div className={`border-2 border-red-500 rounded-xl p-2 ${msgError ? "block" : "hidden"}`}
+                initial={"offscreen"}
+                whileInView={"onscreen"}
+                viewport={{once:true}}
+                transition={{staggerChildren:0.5}}
+                variants={animateVibrate}
+              >
+                <p className="text-red-500">{msgError}</p>
+              </motion.div>
               <div className="flex gap-3">
                 <button type='submit' className="bg-[#DE5959] hover:bg-[#df5f5f] text-white text-xl px-7 py-2 rounded-xl" onClick={() => submitUser()}>Masuk</button>
                 <button type='submit' className="border-white border-[1px] hover:bg-[#df5f5f] text-white text-xl px-7 py-2 rounded-xl">Masuk Admin</button>
