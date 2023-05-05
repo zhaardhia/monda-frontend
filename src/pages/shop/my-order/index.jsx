@@ -4,14 +4,9 @@ import { Icon } from '@iconify/react'
 import Link from 'next/link'
 import Select from 'react-select'
 import OrderCard from '@/components/MyOrder/OrderCard'
-import axios from 'axios'
-import jwt_decode from 'jwt-decode'
-import { useRouter } from 'next/router'
 import { useSessionUser } from '../../../contexts/SessionUserContext'
 
 const MyOrder = () => {
-  const router = useRouter()
-  const [expire, setExpire] = useState();
   const { refreshToken } = useSessionUser()
 
   const chooseOrderType = [

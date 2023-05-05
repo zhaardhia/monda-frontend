@@ -1,8 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LayoutShop from '@/components/LayoutShop'
 import { Icon } from '@iconify/react'
+import { useSessionUser } from '../../contexts/SessionUserContext'
 
 const Profile = () => {
+  const { state, axiosJWT, refreshToken } = useSessionUser()
+  const [userProfile, setUserProfile] = useState()
+  const [errorMsg, setErrorMsg] = useState('')
+
+  useEffect(() => {
+    refreshToken()
+    fetchUserInfo()
+  }, [])
+
+  console.log({state})
+  const fetchUserInfo = async () => {
+    try {
+      const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/user-info?id=${state?.userInfo?.userId}`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+    } catch (error) {
+      
+      console.error(error)
+    }
+    
+    console.log(response.data)
+  }
+
+  // const getUsers = async () => {
+  //   const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user`, {
+  //     headers: {
+  //       Authorization: `Bearer ${state?.token}`
+  //     }
+  //   })
+  //   console.log(response.data)
+  // }
+
   return (
     <LayoutShop>
       <div className="w-[90%]">

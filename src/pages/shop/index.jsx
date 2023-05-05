@@ -9,57 +9,11 @@ import { useRouter } from 'next/router'
 import { useSessionUser } from '../../contexts/SessionUserContext'
 const ShopIndex = () => {
   const router = useRouter()
-  // const [expire, setExpire] = useState();
-  // const [token, setToken] = useState();
-  const { refreshToken, dispatch, state } = useSessionUser()
-
-  const axiosJWT = axios.create()
-  axiosJWT.interceptors.request.use(async(config) => {
-    const currentDate = new Date();
-    console.log("tes", state?.expire * 1000 < currentDate.getTime(), state?.expire * 1000, currentDate.getTime())
-
-    if (state?.expire * 1000 < currentDate.getTime()) {
-      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
-        withCredentials: true,
-        // headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
-      })
-      console.log(response)
-      config.headers.Authorization = `Bearer ${response.data.data}`
-      dispatch({ type: "setToken", payload: response.data.data})
-      console.log(response, response.data.data)
-      const decoded = jwt_decode(response.data.data)
-      dispatch({ type: "setExpire", payload: decoded.exp})
-      // setExpire(decoded.exp)
-      console.log(decoded)
-      return config;
-    }
-  }, (error) => {
-    return Promise.reject(error);
-  })
+  const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
 
   useEffect(() => {
-    refreshToken()
-    // getUsers()
+    // refreshToken()
   }, [])
-
-  // const refreshToken = async () => {
-  //   try {
-  //     const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
-  //       withCredentials: true,
-  //       headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
-  //     })
-  //     console.log(response, response.data.data)
-  //     const decoded = jwt_decode(response.data.data)
-  //     setExpire(decoded.exp)
-
-  //     console.log(decoded)
-  //   } catch (error) {
-  //     if (error.response) {
-  //       router.push("/")
-  //     }
-  //     console.error(error)
-  //   }
-  // }
 
   const getUsers = async () => {
     const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user`, {

@@ -33,6 +33,32 @@ export function SessionUserProvider({children}) {
   const [state, dispatch] = useReducer(sessionUserReducer, { token: "", expire: "", userInfo: {} })
   const router = useRouter()
 
+  const axiosJWT = axios.create()
+  axiosJWT.interceptors.request.use(async(config) => {
+    const currentDate = new Date();
+    console.log("tes", state?.expire * 1000 < currentDate.getTime(), state?.expire * 1000, currentDate.getTime())
+
+    if (state?.expire * 1000 < currentDate.getTime()) {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
+        withCredentials: true,
+        // headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+      })
+      console.log(response)
+      config.headers.Authorization = `Bearer ${response.data.data}`
+      dispatch({ type: "setToken", payload: response.data.data})
+      console.log(response, response.data.data)
+      const decoded = jwt_decode(response.data.data)
+      dispatch({ type: "setExpire", payload: decoded.exp})
+      dispatch({ type: "setUserInfo", payload: decoded})
+
+      // setExpire(decoded.exp)
+      console.log(decoded)
+      return config;
+    }
+  }, (error) => {
+    return Promise.reject(error);
+  })
+
   const refreshToken = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
@@ -53,7 +79,7 @@ export function SessionUserProvider({children}) {
     }
   }
 
-  const value = {state, dispatch, refreshToken}
+  const value = {state, dispatch, refreshToken, axiosJWT}
   return <SessionUserContext.Provider value={value}>{children}</SessionUserContext.Provider>
 }
 
