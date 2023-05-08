@@ -7,12 +7,20 @@ import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import { useSessionUser } from '../../contexts/SessionUserContext'
+import { BarLoader } from "react-spinners";
+
 const ShopIndex = () => {
   const router = useRouter()
   const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
+  const axiosBasic = axios.create()
+
+  const [products, setProducts] = useState()
+  const [loading, setLoading] = useState()
+  const [msgError, setMsgError] = useState()
 
   useEffect(() => {
     // refreshToken()
+    getAllProducts()
   }, [])
 
   const getUsers = async () => {
@@ -22,6 +30,21 @@ const ShopIndex = () => {
       }
     })
     console.log(response.data)
+  }
+
+  const getAllProducts = async () => {
+    try {
+      setLoading(true)
+      const response = await axiosBasic.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product`,)
+      console.log(response)
+      setProducts(response.data.data)
+      setLoading(false)
+      setMsgError()
+    } catch (error) {
+      console.error(error)
+      setLoading(false)
+      setMsgError(error.response.data.message)
+    } 
   }
 
   return (
@@ -37,7 +60,25 @@ const ShopIndex = () => {
           <p className="text-xl">Our Products</p>
           <hr className="w-[30%]" />
         </div>
-        <CatalogueContainer />
+        {
+          loading && (
+            <div className="flex justify-center py-20">
+              <BarLoader
+                color="#B7C4CF"
+                loading={loading}
+                // cssOverride={override}
+                size={30}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </div>
+          )
+        }
+        {
+          !loading && (
+            <CatalogueContainer products={products} />
+          )
+        }
         <button
           onClick={() => getUsers()}
         >get user</button>

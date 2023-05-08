@@ -38,7 +38,9 @@ export function SessionUserProvider({children}) {
     const currentDate = new Date();
     console.log("tes", state?.expire * 1000 < currentDate.getTime(), state?.expire * 1000, currentDate.getTime())
 
-    if (state?.expire * 1000 < currentDate.getTime()) {
+    // refreshToken()
+
+    // if (state?.expire < Math.floor(Date.now() / 1000)) {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
         withCredentials: true,
         // headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
@@ -54,9 +56,15 @@ export function SessionUserProvider({children}) {
       // setExpire(decoded.exp)
       console.log(decoded)
       return config;
-    }
+    // } else {
+    //   console.log("gblk")
+    //   return config
+    // }
+    console.log({ state })
   }, (error) => {
-    return Promise.reject(error);
+    console.log(error)
+    Promise.reject(error);
+    return router.push("/login")
   })
 
   const refreshToken = async () => {
@@ -69,6 +77,7 @@ export function SessionUserProvider({children}) {
       const decoded = jwt_decode(response.data.data)
       // setExpire(decoded.exp)
       dispatch({ type: "setExpire", payload: decoded.exp })
+      dispatch({ type: "setUserInfo", payload: decoded })
 
       console.log(decoded)
     } catch (error) {

@@ -1,15 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SidebarShop from './SidebarShop';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import { useSessionUser } from '../contexts/SessionUserContext'
+
 
 const LayoutShop = ({ children }) => {
+  const { state, axiosJWT, refreshToken } = useSessionUser()
+
+  useEffect(() => {
+    refreshToken()
+  }, [])
+
   return (
     <>
       <SidebarShop />
-      <div className="absolute right-5 top-2">
-        <Link href="/profile" className="">
-          <Icon icon="gg:profile" width={30} />
+      <div className="absolute right-7 top-7">
+        <Link href={`/profile/${state?.userInfo?.userId}`} className="">
+          <Icon icon="gg:profile" width={40} />
         </Link>
       </div>
         
