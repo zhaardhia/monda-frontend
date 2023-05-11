@@ -1,15 +1,43 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import LayoutShop from '@/components/LayoutShop'
 import { Icon } from '@iconify/react'
 import Link from 'next/link'
 import Select from 'react-select'
 import OrderCard from '@/components/MyOrder/OrderCard'
+import { useSessionUser } from '../../../contexts/SessionUserContext'
 
 const MyOrder = () => {
+  const { refreshToken } = useSessionUser()
+
   const chooseOrderType = [
     { value: 'sedang_berlangsung', label: 'Sedang Berlangsung' },
     { value: 'selesai', label: 'Selesai' },
   ]
+
+  useEffect(() => {
+    refreshToken()
+    // getUsers()
+  }, [])
+
+  // const refreshToken = async () => {
+  //   try {
+  //     const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
+  //       withCredentials: true,
+  //       headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+  //     })
+  //     console.log(response, response.data.data)
+  //     const decoded = jwt_decode(response.data.data)
+  //     setExpire(decoded.exp)
+      
+  //     console.log(decoded)
+  //   } catch (error) {
+  //     if (error.response) {
+  //       router.push("/")
+  //     }
+  //     console.error(error)
+  //   }
+  // }
+
   return (
     <LayoutShop>
       <div className="w-[90%]">
