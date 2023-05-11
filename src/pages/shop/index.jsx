@@ -19,7 +19,6 @@ const ShopIndex = () => {
   const [msgError, setMsgError] = useState()
 
   useEffect(() => {
-    // refreshToken()
     getAllProducts()
   }, [])
 
@@ -35,7 +34,8 @@ const ShopIndex = () => {
   const getAllProducts = async () => {
     try {
       setLoading(true)
-      const response = await axiosBasic.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product`,)
+      console.log(state.userInfo.userId)
+      const response = await axiosBasic.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product?user_id=${state.userInfo.userId}`)
       console.log(response)
       setProducts(response.data.data)
       setLoading(false)
