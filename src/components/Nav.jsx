@@ -34,10 +34,10 @@ function Nav() {
                 >Contact Us</Link>
               </div>
               <div className="hidden md:flex gap-4">
-                <Link href="/" 
+                <Link href="/register" 
                   className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >Daftar</Link>
-                <Link href="/" 
+                <Link href="/login" 
                   className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >Masuk</Link>
               </div>
@@ -113,10 +113,10 @@ function Nav() {
                 <Link href="/"
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Contact Us</Link>
-                <Link href="/" 
+                <Link href="/register" 
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Daftar</Link>
-                <Link href="/" 
+                <Link href="/login" 
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Masuk</Link>
               </div>

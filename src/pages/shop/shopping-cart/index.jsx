@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import LayoutShop from '@/components/LayoutShop'
 import { Icon } from '@iconify/react'
 import Delivery from '@/components/ShopCart/Delivery'
 import RecapShopping from '@/components/ShopCart/RecapShopping'
 import ItemOrdered from '@/components/ShopCart/ItemOrdered'
 import Link from 'next/link'
+import { useSessionUser } from '../../../contexts/SessionUserContext'
 
 const ShoppingCart = () => {
+  const { refreshToken } = useSessionUser()
+
+  useEffect(() => {
+    refreshToken()
+  }, [])
+
   return (
     <LayoutShop>
       <div className="w-[90%]">
