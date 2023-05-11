@@ -1,8 +1,8 @@
-import LayoutAdmin from "@/components/LayoutAdmin";
 import React from "react";
 import { Icon } from "@iconify/react";
+import LayoutAdmin from "@/components/LayoutAdmin";
 
-const ShipmentInput = () => {
+const transaction = () => {
    return (
       <LayoutAdmin>
          <div className="flex my-10">
@@ -17,4 +17,4 @@ const ShipmentInput = () => {
    );
 };
 
-export default ShipmentInput;
+export default transaction;

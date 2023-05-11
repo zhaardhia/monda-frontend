@@ -1,7 +1,12 @@
+import LayoutAdmin from "@/components/LayoutAdmin";
 import React from "react";
 
-const index = () => {
-   return <div></div>;
+const Chart = () => {
+   return (
+      <LayoutAdmin>
+         <div></div>;
+      </LayoutAdmin>
+   );
 };
 
-export default index;
+export default Chart;

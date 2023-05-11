@@ -62,7 +62,7 @@ const SidebarAdmin = () => {
                      ></path>
                   </svg>
                </button>
-               <Link href="/admin/chart" className="mt-10">
+               <Link href="/admin" className="mt-10">
                   <Image
                      src="/monda_logo.png"
                      alt="Monda Logo"
@@ -73,7 +73,7 @@ const SidebarAdmin = () => {
                <ul className="space-y-2 font-medium">
                   <li>
                      <Link
-                        href="/admin/chart"
+                        href="/admin"
                         className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                      >
                         <Icon
@@ -126,6 +126,18 @@ const SidebarAdmin = () => {
                      >
                         <Icon
                            icon="iconoir:delivery-truck"
+                           width={30}
+                           className="text-slate-950"
+                        />
+                     </Link>
+                  </li>
+                  <li>
+                     <Link
+                        href="/admin/transaction"
+                        className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                     >
+                        <Icon
+                           icon="grommet-icons:transaction"
                            width={30}
                            className="text-slate-950"
                         />
