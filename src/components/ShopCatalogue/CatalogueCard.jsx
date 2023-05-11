@@ -26,6 +26,25 @@ const CatalogueCard = ({ data }) => {
     }
   }
 
+  const removeFromCart = async () => {
+    try {
+      await axiosJWT.put(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/shopping-cart`, 
+        {
+          product_id: data?.id,
+          user_id: state.userInfo.userId
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${state?.token}`
+          }
+        }
+      ) 
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <div className="w-[20rem] shadow-xl rounded-lg flex flex-col items-center">
       <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[5rem]" />
@@ -35,7 +54,10 @@ const CatalogueCard = ({ data }) => {
           <p>Rp {data?.price}</p>
           <div className="flex h-[2rem]">
             <button className="w-[2rem] border-[1px]"
-              onClick={() => setCountCart(countCart-1)}
+              onClick={() => {
+                removeFromCart()
+                setCountCart(countCart-1)
+              }}
             >-</button>
             <button className="w-[2rem] border-[1px]"
               onClick={() => {
