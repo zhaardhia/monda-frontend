@@ -10,7 +10,7 @@ const index = () => {
         <div className="my-10 flex flex-col gap-3">
           <div className="flex gap-3 items-center ">
             <Icon icon="iconoir:delivery-truck" width={40} className="text-[#A88653]" />
-            <span className="text-slate-800 text-2xl">Pengiriman</span>
+            <span className="text-slate-800 text-2xl font-bold">Pengiriman</span>
           </div>
           <div className="border-[1px] rounded-xl px-5 py-7 my-3">
             <TableSectionAdmin />
