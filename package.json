@@ -13,6 +13,7 @@
     "@iconify/react": "^4.1.0",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "echarts-for-react": "^3.0.2",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
     "framer-motion": "^10.12.4",
