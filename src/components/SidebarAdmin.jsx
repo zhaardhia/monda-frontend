@@ -51,7 +51,7 @@ const SidebarAdmin = () => {
           <Link href="/admin" className="mt-10">
             <Image src="/monda_logo.png" alt="Monda Logo" width={100} height={100} />
           </Link>
-          <ul className="space-y-2 font-medium">
+          <ul className="space-y-3 font-medium">
             <li>
               <Link href="/admin" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-[#A88653] hover:rounded-full dark:hover:bg-gray-700">
                 <Icon icon="mdi:chart-line" width={30} className="text-slate-950 hover:text-slate-100" />

@@ -5,7 +5,7 @@ const TableSectionAdmin = () => {
   return (
     <>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="border-b-2 border-[#E5E7EB] text-xs text-gray-700 uppercase bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
+        <thead className="border-b-2 border-[#E5E7EB] text-sm text-[#6B7280] uppercase bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
               ORDER ID
