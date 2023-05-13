@@ -17,7 +17,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
   const [msgError, setMsgError] = useState()
-  
+
   const submitUser = async () => {
     console.log("tes")
     console.log({ firstName, lastName, email, password, confPassword })

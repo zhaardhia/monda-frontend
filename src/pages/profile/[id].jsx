@@ -3,6 +3,7 @@ import LayoutShop from '@/components/LayoutShop'
 import { Icon } from '@iconify/react'
 import { useSessionUser } from '../../contexts/SessionUserContext'
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const Profile = () => {
   const { state, axiosJWT, refreshToken } = useSessionUser()
@@ -47,6 +48,18 @@ const Profile = () => {
     } catch (error) {
       console.error(error)
       setLoading(false)
+    }
+  }
+
+  const logout = async () => {
+    try {
+      await axiosJWT.delete(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/logout-user`, {
+        withCredentials: true,
+        headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+      })
+      router.push("/")
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -144,6 +157,10 @@ const Profile = () => {
               <button className="bg-green-500 px-5 py-2 rounded-xl text-white"
                 onClick={updateUserInfo}
               >Save</button>
+            </div>
+            <div className="flex justify-center gap-5 my-20">
+              <button className="bg-red-500 px-5 py-2 rounded-xl text-white" 
+                onClick={logout}>Logout</button>
             </div>
           </>
         )}

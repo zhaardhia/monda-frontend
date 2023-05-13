@@ -3,14 +3,40 @@ import LayoutShop from '@/components/LayoutShop'
 import { Icon } from '@iconify/react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
+import { useSessionUser } from '../../../../contexts/SessionUserContext'
 
 const Checkout = () => {
+  const router = useRouter()
   const [bank, setBank] = useState()
+  const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
+
   console.log(bank)
 
   const handleBank = (bankChoosen) => {
     if (bank === bankChoosen) setBank()
     else setBank(bankChoosen)
+  }
+
+  const checkout = async () => {
+    try {
+      await axiosJWT.post(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order/checkout`, 
+        {
+          user_id: state.userInfo.userId,
+          payment_type: "bank_transfer",
+          provider: bank
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${state?.token}`
+          }
+        }
+      )
+      // router.push()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -81,7 +107,7 @@ const Checkout = () => {
           <hr />
         </div>
         <div className="flex justify-center my-20">
-          <Link href={`/shop/shopping-cart/checkout`} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Confirm Payment</Link>
+          <button onClick={checkout} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Confirm Payment</button>
         </div>
       </div>
     </LayoutShop>
