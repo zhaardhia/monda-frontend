@@ -2,6 +2,7 @@ import LayoutAdmin from "@/components/LayoutAdmin";
 import { Icon } from "@iconify/react";
 import CatalogueContainerAdmin from "@/components/AdminPage/CatalogueContainerAdmin";
 import React, { useState, useEffect } from "react";
+import ImageUploader from "@/components/AdminPage/ImageUploader";
 
 const ProductIndex = () => {
   const [products, setProducts] = useState([
@@ -18,6 +19,7 @@ const ProductIndex = () => {
     harga: 0,
     stok: 0,
     description: "",
+    imageURL: "",
   });
   console.log(dataForm);
 
@@ -35,7 +37,7 @@ const ProductIndex = () => {
     <LayoutAdmin>
       <div className="w-full pr-2">
         <div className="my-10 flex flex-col gap-3">
-          <div className="flex gap-3 items-center ">
+          <div className="flex gap-3 items-center">
             <Icon icon="mingcute:shopping-bag-1-fill" width={40} className="text-[#A88653]" />
             <span className="text-slate-800 text-2xl font-bold">Katalog Produk</span>
           </div>
@@ -48,9 +50,9 @@ const ProductIndex = () => {
             </div>
             {/* Form */}
             <form action="" className="flex p-8">
-              <div>
-                <label>Gambar Produk</label>
-                <div className="border border-gray-400 p-4 w-72 h-80">Tambah Gambar</div>
+              <div className="pt-6">
+                <label className="flex justify-center mb-4 font-semibold text-lg">Gambar Produk</label>
+                <ImageUploader setDataForm={setDataForm} imageURL={dataForm.imageURL} />
               </div>
               <div className="ms-12 w-full">
                 {/* Nama Produk */}
@@ -110,7 +112,7 @@ const ProductIndex = () => {
                       pattern="[0-9]"
                     />
                     <button
-                      className="w-9 h-9 rounded-full border border-black ms-3 mr-3 text-[#79CEAA] flex justify-center items-center"
+                      className="w-9 h-9 rounded-full border border-black ms-3 mr-3 text-[#79CEAA] flex justify-center items-center active:border-2"
                       onClick={(e) => {
                         e.preventDefault();
                         setDataForm((prev) => {
@@ -121,7 +123,7 @@ const ProductIndex = () => {
                       <Icon icon="ic:outline-plus" width={30} />
                     </button>
                     <button
-                      className="w-9 h-9 rounded-full border border-black text-[#D72C2C] flex justify-center items-center"
+                      className="w-9 h-9 rounded-full border border-black text-[#D72C2C] flex justify-center items-center active:border-2"
                       onClick={(e) => {
                         e.preventDefault();
                         setDataForm((prev) => {
