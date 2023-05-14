@@ -30,8 +30,8 @@ const AdminIndex = () => {
               <Icon icon="ph:currency-circle-dollar" width={25} color="#408747" />
             </div>
             <span className="text-[#71717A]">cek hasil pendapatanmu bulan ini</span>
-            <div>
-              <ReactEcharts option={option} />
+            <div className="w-full">
+              <ReactEcharts option={option} style={{ height: "400px", padding: 0 }} />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-10 my-10">
