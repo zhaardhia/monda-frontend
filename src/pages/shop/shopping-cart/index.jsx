@@ -4,16 +4,41 @@ import { Icon } from '@iconify/react'
 import Delivery from '@/components/ShopCart/Delivery'
 import RecapShopping from '@/components/ShopCart/RecapShopping'
 import ItemOrdered from '@/components/ShopCart/ItemOrdered'
+import Address from '@/components/ShopCart/Address'
 import Link from 'next/link'
 import { useSessionUser } from '../../../contexts/SessionUserContext'
+import { BarLoader } from "react-spinners";
 
 const ShoppingCart = () => {
-  const { refreshToken } = useSessionUser()
-
+  const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
+  const [loading, setLoading] = useState(true)
+  const [cartData, setCartData] = useState()
   useEffect(() => {
     refreshToken()
-  }, [])
+    fetchUserCart()
+  }, [state.userInfo.userId])
 
+  const fetchUserCart = async () => {
+    try {
+      setLoading(true)
+      console.log("userid ", state.userInfo.userId),
+      console.log("")
+      const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/shopping-cart/user-cart?user_id=${state.userInfo.userId}`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+
+      console.log(response)
+      setCartData(response.data.data)
+      
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+      setLoading(false)
+    }
+  }
+  // console.log({cartData})
   return (
     <LayoutShop>
       <div className="w-[90%]">
@@ -27,13 +52,22 @@ const ShoppingCart = () => {
           <hr className="w-[30%]" />
         </div>
         <div className="flex flex-col gap-5">
-          <Delivery />
-          <ItemOrdered />
-          <ItemOrdered />
-          <RecapShopping />
+          <Address id={cartData?.shopping_session_id} delivery_location={cartData?.delivery_location} />
+          <Delivery id={cartData?.shopping_session_id} courier_id={cartData?.delivery_location} />
+          {loading && (<BarLoader />)}
+          {
+            !loading && cartData?.user_cart?.map((e) => {
+              return (
+                <ItemOrdered data={e} setCartData={setCartData} exactData={cartData} />
+              )
+            })
+          }
+          {/* <ItemOrdered />
+          <ItemOrdered /> */}
+          <RecapShopping data={cartData} />
         </div>
         <div className="flex justify-center my-20">
-          <Link href="#" className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Proceed to Payment</Link>
+          <Link href={`/shop/shopping-cart/checkout/${cartData?.shopping_session_id}`} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Proceed to Payment</Link>
         </div>
       </div>
     </LayoutShop>

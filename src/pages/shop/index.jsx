@@ -11,8 +11,7 @@ import { BarLoader } from "react-spinners";
 
 const ShopIndex = () => {
   const router = useRouter()
-  const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
-  const axiosBasic = axios.create()
+  const { axiosJWT, axiosBasic, refreshToken, dispatch, state } = useSessionUser()
 
   const [products, setProducts] = useState()
   const [loading, setLoading] = useState()
@@ -22,20 +21,20 @@ const ShopIndex = () => {
     getAllProducts()
   }, [])
 
-  const getUsers = async () => {
-    const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user`, {
-      headers: {
-        Authorization: `Bearer ${state?.token}`
-      }
-    })
-    console.log(response.data)
-  }
+  // const getUsers = async () => {
+  //   const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user`, {
+  //     headers: {
+  //       Authorization: `Bearer ${state?.token}`
+  //     }
+  //   })
+  //   console.log(response.data)
+  // }
 
   const getAllProducts = async () => {
     try {
       setLoading(true)
       console.log(state.userInfo.userId)
-      const response = await axiosBasic.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product?user_id=${state.userInfo.userId}`)
+      const response = await axiosBasic(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product?user_id=${state.userInfo.userId}`)
       console.log(response)
       setProducts(response.data.data)
       setLoading(false)

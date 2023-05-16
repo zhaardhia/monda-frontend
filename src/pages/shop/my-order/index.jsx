@@ -5,9 +5,18 @@ import Link from 'next/link'
 import Select from 'react-select'
 import OrderCard from '@/components/MyOrder/OrderCard'
 import { useSessionUser } from '../../../contexts/SessionUserContext'
+//Import Tables
+import DataTable from "datatables.net";
+import "datatables.net-buttons";
+import "datatables.net-buttons/js/buttons.html5.js";
+import moment from 'moment'
+import { checkStatusOrder, rupiah } from "../../../utils/libs"
+import { BarLoader } from "react-spinners";
 
 const MyOrder = () => {
-  const { refreshToken } = useSessionUser()
+  const { axiosJWT, refreshToken, state, dispatch } = useSessionUser()
+  const [isLoading, setIsLoading] = useState(true)
+  const [orderList, setOrderList] = useState([])
 
   const chooseOrderType = [
     { value: 'sedang_berlangsung', label: 'Sedang Berlangsung' },
@@ -15,28 +24,59 @@ const MyOrder = () => {
   ]
 
   useEffect(() => {
-    refreshToken()
-    // getUsers()
-  }, [])
+    setOrderList()
+    getData();
+  }, [state.userInfo.userId])
 
-  // const refreshToken = async () => {
-  //   try {
-  //     const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
-  //       withCredentials: true,
-  //       headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
-  //     })
-  //     console.log(response, response.data.data)
-  //     const decoded = jwt_decode(response.data.data)
-  //     setExpire(decoded.exp)
-      
-  //     console.log(decoded)
-  //   } catch (error) {
-  //     if (error.response) {
-  //       router.push("/")
-  //     }
-  //     console.error(error)
-  //   }
-  // }
+  // useEffect(() => {
+  //   createTable();
+  // }, [orderList]);
+
+  const getData = async () => {
+    try {
+      setIsLoading(true)
+      const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order/list-order?user_id=${state.userInfo.userId}`, {
+        withCredentials: true,
+        headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+      })
+      console.log(response, response.data.data)
+      setOrderList(response.data.data)     
+      setIsLoading(false)  
+      createTable();
+    } catch (error) {
+      console.error(error)
+      setIsLoading(false)
+    }
+  };
+
+  const createTable = () => {
+    const tableInit = new DataTable("#table", {
+      pagingType: "full_numbers",
+      pageLength: 10,
+      processing: true,
+      scrollX: true,
+      responsive: true,
+      destroy: true,
+      dom: "Blfrtip",
+      search: {
+        className: "input-search mr-4",
+      },
+      buttons: [],
+      lengthMenu: [
+        [10, 20, 30, 50, -1],
+        [10, 20, 30, 50, "All"],
+      ],
+      columns: [
+        { width: "25px" },
+        { width: "220px" },
+        { width: "180px" },
+        { width: "220px" },
+        { width: "150px" },
+        { width: "150px" }
+      ],
+    });
+  };
+
 
   return (
     <LayoutShop>
@@ -61,15 +101,74 @@ const MyOrder = () => {
           </div>
         </div>
 
+        {
+          isLoading && (
+            <BarLoader />
+          )
+        }
+
+        {!isLoading && (
+          <div className='relative flex flex-col table-background'>
+            <div className='block w-full'>
+              <table id='table'>
+                <thead>
+                  <tr>
+                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
+                      No
+                    </th>
+                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
+                      Order ID
+                    </th>
+                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
+                      Date & Time
+                    </th>
+                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2 w-full'>
+                      Amount
+                    </th>
+                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
+                      Status
+                    </th>
+                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
+                      Action
+                    </th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderList?.map((item, index) => {
+                    console.log(item)
+                    return (
+                      <tr key={index}>
+                        <td className='text-xs font-weight-bold text-center'>
+                          {index + 1}
+                        </td>
+                        <td className='text-xs font-weight-bold text-center cursor-pointer hover:text-blue-600'>
+                          {item.id}
+                        </td>
+                        <td className='text-xs font-weight-bold'>
+                          {moment(item.updated_date).format("LLL")}
+                        </td>
+                        <td className='text-xs font-weight-bold color-blue'>
+                          {rupiah(item.gross_amount)}
+                        </td>
+                        <td className='text-xs font-weight-bold'>
+                          {checkStatusOrder(item.status_order)}
+                        </td>
+                        <td className='text-xs font-weight-bold'>
+                          <Link href={`/shop/my-order/detail/${item.id}`}>Lihat Detail Pesanan</Link>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* <OrderCard />
         <OrderCard />
-        <OrderCard />
-        <OrderCard />
-        
-        {/* <div className="flex justify-center items-center gap-5 my-10">
-          <hr className="w-[30%]" />
-          <p className="text-xl">Please fill the delivery information down below here:</p>
-          <hr className="w-[30%]" />
-        </div> */}
+        <OrderCard />         */}
         
       </div>
     </LayoutShop>

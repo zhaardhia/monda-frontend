@@ -16,8 +16,90 @@
   }
 }
 
-body {
-  
+/* datatable css */
+.dataTables_wrapper {
+  margin: 0.5rem 0;
 }
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3) !important;
+  height: 5rem !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background-color: #0083ff;
+  border-radius: 50%;
+  color: #ffffff !important;
+  border: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:active,
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: #0083ff;
+  color: #ffffff;
+  border: none;
+  box-shadow: inset 0 0 3px #0083ff;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  padding: 1.25em 0.625rem 0;
+}
+
+.dataTables_wrapper .dataTables_info {
+  padding: 1.25em 0.625rem 0;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+  font-size: 14px;
+}
+
+.dataTables_wrapper .dataTables_length {
+  white-space: nowrap;
+  padding-left: 0.625rem;
+}
+
+.dataTables_wrapper .dataTables_length select {
+  width: 90%;
+  font-size: 14px;
+  border-radius: 8px;
+  height: 2.375rem;
+}
+
+.dataTables_wrapper .dataTables_filter {
+  padding-right: 2rem;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #979797;
+  border-radius: 50px;
+  height: 2.375rem;
+  font-size: 16px;
+  line-height: 16px;
+  font-family: "Roboto";
+  font-style: normal;
+  width: 12.5rem;
+}
+
+tr.dt-rowReorder-moving {
+  outline: 2px solid #0082ff;
+}
+
+table.dt-rowReorder-float {
+  outline: 2px solid #0756a1;
+}
+
+.dt-buttons {
+  position: relative;
+  float: right;
+  margin-right: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
