@@ -15,7 +15,7 @@ const ShopIndex = () => {
   const router = useRouter()
   const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
   const axiosBasic = axios.create()
-
+  const id = router.query.id
   const [product, setProduct] = useState()
   const [loading, setLoading] = useState()
   const [msgError, setMsgError] = useState()
@@ -25,7 +25,7 @@ const ShopIndex = () => {
   useEffect(() => {
     // refreshToken()
     getProductById()
-  }, [])
+  }, [id])
 
   const getUsers = async () => {
     const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user`, {
@@ -39,7 +39,7 @@ const ShopIndex = () => {
   const getProductById = async () => {
     try {
       setLoading(true)
-      const response = await axiosBasic.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product/detail-product?id=${router?.query?.id}`)
+      const response = await axiosBasic.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product/detail-product?id=${id}`)
       console.log(response)
       setProduct(response.data.data)
       setLoading(false)
@@ -49,6 +49,44 @@ const ShopIndex = () => {
       setLoading(false)
       setMsgError(error.response.data.message)
     } 
+  }
+
+  const addToCart = async () => {
+    try {
+      await axiosJWT.post(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/shopping-cart`, 
+        {
+          product_id: product?.id,
+          user_id: state.userInfo.userId
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${state?.token}`
+          }
+        }
+      ) 
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const removeFromCart = async () => {
+    try {
+      await axiosJWT.put(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/shopping-cart`, 
+        {
+          product_id: product?.id,
+          user_id: state.userInfo.userId
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${state?.token}`
+          }
+        }
+      ) 
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -85,10 +123,16 @@ const ShopIndex = () => {
                   <p className="text-2xl">Rp {product?.price}</p>
                   <div className="flex h-[2rem]">
                     <button className="w-[2rem] border-[1px]"
-                      onClick={() => setCountCart(countCart-1)}
+                      onClick={() => {
+                        removeFromCart()
+                        setCountCart(countCart-1)
+                      }}
                     >-</button>
                     <button className="w-[2rem] border-[1px]"
-                      onClick={() => setCountCart(countCart+1)}
+                      onClick={() => {
+                        addToCart()
+                        setCountCart(countCart+1)
+                      }}
                     >+</button>
                     <div className="flex justify-evenly border-[1px] items-center w-[4rem] bg-[#DE5959] text-white">
                       <div className="">

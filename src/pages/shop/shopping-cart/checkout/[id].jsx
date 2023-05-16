@@ -11,8 +11,6 @@ const Checkout = () => {
   const [bank, setBank] = useState()
   const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
 
-  console.log(bank)
-
   const handleBank = (bankChoosen) => {
     if (bank === bankChoosen) setBank()
     else setBank(bankChoosen)
@@ -20,7 +18,7 @@ const Checkout = () => {
 
   const checkout = async () => {
     try {
-      await axiosJWT.post(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order/checkout`, 
+      const response = await axiosJWT.post(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order/checkout`, 
         {
           user_id: state.userInfo.userId,
           payment_type: "bank_transfer",
@@ -33,7 +31,8 @@ const Checkout = () => {
           }
         }
       )
-      // router.push()
+      console.log({response})
+      router.push(`/shop/my-order/payment/${response.data.data.order_id}`)
     } catch (error) {
       console.error(error)
     }

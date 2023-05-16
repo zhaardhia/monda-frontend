@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import Link from 'next/link';
 import { useSessionUser } from '../../contexts/SessionUserContext'
-
+import { rupiah } from "../../utils/libs"
 const CatalogueCard = ({ data }) => {
   const [countCart, setCountCart] = useState(data?.userCart?.quantity || 0);
   const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
@@ -46,12 +46,12 @@ const CatalogueCard = ({ data }) => {
   }
 
   return (
-    <div className="w-[20rem] shadow-xl rounded-lg flex flex-col items-center">
-      <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[5rem]" />
+    <div className="md:w-[20rem] w-[15rem] shadow-xl rounded-lg flex flex-col items-center">
+      <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[100%]" />
       <div className="w-[90%] my-4 flex flex-col gap-2">
         <Link href={`/shop/detail-product/${data?.id}`} className="text-xl font-semibold">{data?.name}</Link>
         <div className="flex justify-between items-center">
-          <p>Rp {data?.price}</p>
+          <p>{rupiah(data?.price)}</p>
           <div className="flex h-[2rem]">
             <button className="w-[2rem] border-[1px]"
               onClick={() => {

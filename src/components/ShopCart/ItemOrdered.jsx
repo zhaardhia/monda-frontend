@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Icon } from '@iconify/react'
 import { useSessionUser } from '../../contexts/SessionUserContext'
+import { rupiah } from "../../utils/libs"
 
 const ItemOrdered = ({ data, setCartData, exactData }) => {
   const [countCart, setCountCart] = useState(data?.["cart_items.quantity"]);
@@ -119,7 +120,7 @@ const ItemOrdered = ({ data, setCartData, exactData }) => {
         >
           <Icon icon="ic:baseline-close" width={30} className="text-red-700" />
         </div>
-        <p className="text-2xl">Rp {data?.["cart_items.product.price"] * countCart}</p>
+        <p className="text-2xl">{rupiah(data?.["cart_items.product.price"] * countCart)}</p>
       </div>
     </div>
   )

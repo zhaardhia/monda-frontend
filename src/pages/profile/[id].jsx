@@ -22,7 +22,7 @@ const Profile = () => {
   useEffect(() => {
     // refreshToken()
     fetchUserInfo()
-  }, [])
+  }, [router.query.id])
 
   console.log({state})
   const fetchUserInfo = async () => {

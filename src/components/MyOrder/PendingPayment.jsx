@@ -1,7 +1,9 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
+import { rupiah } from "../../utils/libs"
+import moment from 'moment'
 
-const PendingPayment = () => {
+const PendingPayment = ({ data }) => {
   return (
     <div>
       <div className="my-5 flex gap-3 items-center">
@@ -11,17 +13,17 @@ const PendingPayment = () => {
       <hr />
       <div className="my-10 flex justify-between items-center">
         <span className="text-slate-800 text-2xl">Total Pembayaran</span>
-        <span className="text-slate-800 text-lg font-light">Rp 105.000,00</span>
+        <span className="text-slate-800 text-lg font-light">{rupiah(data?.amount)}</span>
       </div>
       <hr />
       <div className="my-8 flex gap-3 items-center">
         <img src="/bank_mandiri.png" alt="" className="md:w-[8rem] w-[5rem]" />
-        <p className="font-light text-xl">Bank Mandiri</p>
+        <p className="font-light text-xl">Bank {data?.provider.toUpperCase()}</p>
       </div>
       <div className="flex flex-col gap-3">
         <p className="font-light">No. Rekening Virtual Account:</p>
-        <p className="text-3xl font-semibold">896 0818 9187 33</p>
-        <p className="text-gray-400">Jatuh tempo pada 13 Apr 2023, 17:20</p>
+        <p className="text-3xl font-semibold">{data?.va_number}</p>
+        <p className="text-gray-400">Jatuh tempo pada {moment(data?.expiry_time).format("LLL")}</p>
         <div className="w-[25rem]">
           <p>Bayar pesanan ke Virtual Account di atas sebelum membuat pesanan kembali dengan Virtual Account agar nomor tetap sama. Harap bayar pesanan sebelum jatuh tempo pada waktu yang tertera</p>
         </div>

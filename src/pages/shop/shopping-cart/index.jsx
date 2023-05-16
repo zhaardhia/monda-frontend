@@ -4,8 +4,10 @@ import { Icon } from '@iconify/react'
 import Delivery from '@/components/ShopCart/Delivery'
 import RecapShopping from '@/components/ShopCart/RecapShopping'
 import ItemOrdered from '@/components/ShopCart/ItemOrdered'
+import Address from '@/components/ShopCart/Address'
 import Link from 'next/link'
 import { useSessionUser } from '../../../contexts/SessionUserContext'
+import { BarLoader } from "react-spinners";
 
 const ShoppingCart = () => {
   const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
@@ -14,7 +16,7 @@ const ShoppingCart = () => {
   useEffect(() => {
     refreshToken()
     fetchUserCart()
-  }, [])
+  }, [state.userInfo.userId])
 
   const fetchUserCart = async () => {
     try {
@@ -36,7 +38,7 @@ const ShoppingCart = () => {
       setLoading(false)
     }
   }
-
+  // console.log({cartData})
   return (
     <LayoutShop>
       <div className="w-[90%]">
@@ -50,8 +52,9 @@ const ShoppingCart = () => {
           <hr className="w-[30%]" />
         </div>
         <div className="flex flex-col gap-5">
-          <Delivery />
-          {loading && (<h1>loading...</h1>)}
+          <Address id={cartData?.shopping_session_id} delivery_location={cartData?.delivery_location} />
+          <Delivery id={cartData?.shopping_session_id} courier_id={cartData?.delivery_location} />
+          {loading && (<BarLoader />)}
           {
             !loading && cartData?.user_cart?.map((e) => {
               return (
