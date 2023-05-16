@@ -67,6 +67,9 @@ export function SessionUserProvider({children}) {
     return router.push("/login")
   })
 
+  const axiosBasic = axios.create()
+
+
   const refreshToken = async () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/token`, {
@@ -88,7 +91,7 @@ export function SessionUserProvider({children}) {
     }
   }
 
-  const value = {state, dispatch, refreshToken, axiosJWT}
+  const value = {state, dispatch, refreshToken, axiosJWT, axiosBasic}
   return <SessionUserContext.Provider value={value}>{children}</SessionUserContext.Provider>
 }
 

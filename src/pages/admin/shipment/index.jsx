@@ -2,6 +2,7 @@ import TableSectionAdmin from "@/components/AdminPage/TableSection";
 import LayoutAdmin from "@/components/LayoutAdmin";
 import { Icon } from "@iconify/react";
 import React from "react";
+import { Icon } from "@iconify/react";
 
 const index = () => {
   return (
@@ -21,4 +22,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default ShipmentInput;
