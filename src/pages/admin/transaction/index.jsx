@@ -21,7 +21,7 @@ const index = () => {
               <div>
                 <select
                   id="small"
-                  class="w-32 h-[36px] flex py-1 text-[#53514D] border font-medium border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="w-32 h-[36px] flex py-1 text-[#53514D] border font-medium border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="order">ORDER ID</option>
                   <option value="date">DATE</option>
@@ -33,12 +33,12 @@ const index = () => {
               <form className="flex items-center ms-2">
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500">
-                    <Icon icon="bx:search-alt" width={20} />
+                    <Icon icon="bx:search-alt" width={20} className="text-[#C2C2C2]" />
                   </div>
                   <input
                     type="text"
                     id="voice-search"
-                    className="bg-gray-50 border border-gray-300 h-[36px] w-60 font-semibold text-[#C2C2C2] rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    className="bg-gray-50 border border-gray-300 h-[36px] w-60 font-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search"
                   />
                 </div>
