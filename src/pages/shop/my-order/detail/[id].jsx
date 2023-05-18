@@ -14,7 +14,7 @@ const MyOrderDetail = () => {
 
   useEffect(() => {
     getData()
-  }, [])
+  }, [router.query.id])
   const getData = async () => {
     try {
       setIsLoading(true)
@@ -34,7 +34,7 @@ const MyOrderDetail = () => {
 
   return (
     <LayoutShop>
-      <div className="w-[90%]">
+      <div className="w-[90%] md:mx-0 mx-auto">
         <div className="my-10 flex flex-col gap-3">
           <div className="flex gap-3 items-center ">
             <Icon icon="mdi:credit-card-fast-outline" width={40} className="text-[#A88653]" />

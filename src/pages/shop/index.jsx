@@ -48,9 +48,9 @@ const ShopIndex = () => {
 
   return (
     <LayoutShop>
-      <div className="w-[90%]">
+      <div className="md:w-[90%] w-[100%] md:mx-0 mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl">Hi<span className="text-[#A88653]">, Ishaq!</span></h1>
+          <h1 className="text-2xl">Hi<span className="text-[#A88653]">, {state.userInfo.name}!</span></h1>
           <SearchBar />
         </div>
         <BannerWelcome />
@@ -78,9 +78,6 @@ const ShopIndex = () => {
             <CatalogueContainer products={products} />
           )
         }
-        <button
-          onClick={() => getUsers()}
-        >get user</button>
       </div>
     </LayoutShop>
   )

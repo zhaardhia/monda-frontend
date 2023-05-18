@@ -33,7 +33,7 @@ const MondaInfo = () => {
           <p className="text-2xl font-extralight">Monda kitchen menjual beberapa macam frozen food, makanan siap saji, dan sambal-sambal pilihan olahan khas Monda Kitchen yang bisa monders pesan langsung melalui website, tokopedia, maupun gojek</p>
         </div>
         <div className="flex justify-center">
-          <Link href="/" className="p-3 bg-[#DE5959] text-white rounded-lg">Shop Now</Link>
+          <Link href="/shop" className="p-3 bg-[#DE5959] text-white rounded-lg">Shop Now</Link>
         </div>
       </div>
       <div className="flex justify-center items-center mb-10">

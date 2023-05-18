@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
 import Link from 'next/link'
 import Image from 'next/image'
+import { useSessionUser } from '../contexts/SessionUserContext'
 
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
+
   return (
     <div>
       <nav className="">
@@ -32,15 +35,22 @@ function Nav() {
                 <Link href="/"
                   className="text-[#A88653] hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >Contact Us</Link>
+                {state.isLoggedIn && (
+                  <Link href={`/profile/${state.userInfo.userId}`} 
+                    className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
+                  >Profile</Link>
+                )}
               </div>
-              <div className="hidden md:flex gap-4">
-                <Link href="/register" 
-                  className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
-                >Daftar</Link>
-                <Link href="/login" 
-                  className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
-                >Masuk</Link>
-              </div>
+              {state.isLoggedIn === false && (
+                <div className="hidden md:flex gap-4">
+                  <Link href="/register" 
+                    className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
+                  >Daftar</Link>
+                  <Link href="/login" 
+                    className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
+                  >Masuk</Link>
+                </div>
+              )}
             </div>
             <div className="-mr-2 flex md:hidden">
               <button

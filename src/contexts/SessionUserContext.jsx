@@ -26,18 +26,22 @@ function sessionUserReducer(state, action) {
         userInfo: action.payload
       }
     }
+    case "setIsLoggedIn": {
+      return {
+        ...state,
+        isLoggedIn: action.payload
+      }
+    }
   }
 }
 
 export function SessionUserProvider({children}) {
-  const [state, dispatch] = useReducer(sessionUserReducer, { token: "", expire: "", userInfo: {} })
+  const [state, dispatch] = useReducer(sessionUserReducer, { token: "", expire: "", userInfo: {}, isLoggedIn: false })
   const router = useRouter()
 
   const axiosJWT = axios.create()
   axiosJWT.interceptors.request.use(async(config) => {
     const currentDate = new Date();
-    console.log("tes", state?.expire * 1000 < currentDate.getTime(), state?.expire * 1000, currentDate.getTime())
-
     // refreshToken()
 
     // if (state?.expire < Math.floor(Date.now() / 1000)) {
@@ -45,13 +49,12 @@ export function SessionUserProvider({children}) {
         withCredentials: true,
         // headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
       })
-      console.log(response)
       config.headers.Authorization = `Bearer ${response.data.data}`
       dispatch({ type: "setToken", payload: response.data.data})
-      console.log(response, response.data.data)
       const decoded = jwt_decode(response.data.data)
       dispatch({ type: "setExpire", payload: decoded.exp})
       dispatch({ type: "setUserInfo", payload: decoded})
+      dispatch({ type: "setIsLoggedIn", payload: true})
 
       // setExpire(decoded.exp)
       console.log(decoded)
@@ -60,9 +63,9 @@ export function SessionUserProvider({children}) {
     //   console.log("gblk")
     //   return config
     // }
-    console.log({ state })
   }, (error) => {
     console.log(error)
+    dispatch({ type: "setIsLoggedIn", payload: false})
     Promise.reject(error);
     return router.push("/login")
   })
@@ -81,9 +84,10 @@ export function SessionUserProvider({children}) {
       // setExpire(decoded.exp)
       dispatch({ type: "setExpire", payload: decoded.exp })
       dispatch({ type: "setUserInfo", payload: decoded })
+      dispatch({ type: "setIsLoggedIn", payload: true})
 
-      console.log(decoded)
     } catch (error) {
+      dispatch({ type: "setIsLoggedIn", payload: false})
       if (error.response) {
         router.push("/login")
       }

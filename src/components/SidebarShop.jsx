@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
-
+import { useRouter } from 'next/router'
 const SidebarShop = () => {
   const [sidebarActive, setSidebarActive] = useState();
+  const router = useRouter()
+
   return (
     <>
       <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -36,28 +38,23 @@ const SidebarShop = () => {
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
-              <Link href="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Link href="/" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-gray-700">
                 <Icon icon="material-symbols:home" width={30} className="text-slate-100" />
               </Link>
             </li>
-            <li>
-              <Link href="/shop" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className={`${router.pathname === "/shop" && "bg-[#A88653] rounded-lg"}`}>
+              <Link href="/shop" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-gray-700">
                 <Icon icon="mingcute:shopping-bag-1-fill" width={30} className="text-slate-100" />
               </Link>
             </li>
-            <li>
-              <Link href="/shop/shopping-cart" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className={`${router.pathname.includes("/shop/shopping-cart") && "bg-[#A88653] rounded-lg"}`}>
+              <Link href="/shop/shopping-cart" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-gray-700">
                 <Icon icon="material-symbols:shopping-cart-outline" width={30} className="text-slate-100" />
               </Link>
             </li>
-            <li>
-              <Link href="/shop/my-order" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+            <li className={`${router.pathname.includes("/shop/my-order") && "bg-[#A88653] rounded-lg"}`}>
+              <Link href="/shop/my-order" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-gray-700">
                 <Icon icon="mdi:credit-card-fast-outline" width={30} className="text-slate-100" />
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
-                <Icon icon="iconoir:delivery-truck" width={30} className="text-slate-100" />
               </Link>
             </li>
           </ul>

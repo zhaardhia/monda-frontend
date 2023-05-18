@@ -39,7 +39,7 @@ const OrderCard = ({ data, setData }) => {
 
   return (
     <div className="border-[1px] rounded-xl p-10 my-10">
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex sm:flex-row flex-col justify-between sm:items-center sm:gap-0 gap-8 mb-5">
         <Link className="text-xl underline" href="/shop/my-order/">{"< Kembali"}</Link>
         <div className="flex gap-2 items-center">
           <p className="text-xl text-slate-400 font-light">Status: </p>
@@ -53,11 +53,19 @@ const OrderCard = ({ data, setData }) => {
         <h1 className="text-xl font-light">No. Resi: <strong>{data?.resi ?? "Produk Belum Dikirim"}</strong></h1>
         <h1 className="text-xl font-light">Kurir: <strong>{data?.courier.toUpperCase()}</strong></h1>
       </div>
+
+      {data?.status_order === "shipment" && (
+        <div className="mt-5">
+          <h1 className="text-xl font-light">Order Date: <strong>#00{data?.order_no}</strong></h1>
+          <h1 className="text-xl font-light">Delivery To: <strong>{data?.address}</strong></h1>
+        </div>
+      )}
+      
       <div className="my-10">
         {data?.order_detail?.map((e) => {
           return (
             <>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between sm:flex-row flex-col sm:items-center sm:gap-0 gap-3">
                 <div className="flex gap-3 items-center">
                   <img src="/sambel-roa.png" alt="" className="md:w-[8rem] w-[5rem]" />
                   <h1 className="text-lg font-semibold">{e?.["product.name"]}</h1>
@@ -72,11 +80,11 @@ const OrderCard = ({ data, setData }) => {
           )
         })}
       </div>
-      <div className="flex justify-between">
+      <div className="flex justify-between md:flex-row flex-col md:gap-0 gap-10">
         <div className="flex flex-col gap-3">
           <h1 className="text-xl font-semibold">Payment</h1>
-          <div className="flex gap-3 items-center">
-            <img src="/bank_mandiri.png" alt="" className="md:w-[8rem] w-[5rem]" />
+          <div className="flex gap-5 items-center">
+            <img src={`/bank_${data?.["payment_order.provider"]}.png`} alt="" className="md:w-[7rem] w-[4rem]" />
             <p className="font-light">Bank {data?.["payment_order.provider"].toUpperCase()}</p>
           </div>
         </div>
@@ -88,7 +96,7 @@ const OrderCard = ({ data, setData }) => {
           </div>
         </div>
       </div>
-      <div className={`w-[70%] mx-auto ${bgStatus} rounded-xl p-2 my-20`}>
+      <div className={`sm:w-[70%] w-[95%] mx-auto ${bgStatus} rounded-xl p-2 my-20`}>
         <p className={`${textStatusColor} text-center`}>{myStatusOrderText(data?.status_order)}</p>
       </div>
       {data?.status_order === "not_paid" && (

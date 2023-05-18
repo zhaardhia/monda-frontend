@@ -10,6 +10,7 @@ import { useRouter } from 'next/router'
 import { useSessionUser } from '../../../contexts/SessionUserContext'
 import { BarLoader } from "react-spinners";
 import Link from 'next/link'
+import { rupiah } from '../../../utils/libs'
 
 const ShopIndex = () => {
   const router = useRouter()
@@ -27,15 +28,6 @@ const ShopIndex = () => {
     getProductById()
   }, [id])
 
-  const getUsers = async () => {
-    const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user`, {
-      headers: {
-        Authorization: `Bearer ${state?.token}`
-      }
-    })
-    console.log(response.data)
-  }
-  console.log(router.query.id)
   const getProductById = async () => {
     try {
       setLoading(true)
@@ -91,7 +83,7 @@ const ShopIndex = () => {
 
   return (
     <LayoutShop>
-      <div className="w-[90%]">
+      <div className="w-[90%] md:mx-0 mx-auto">
         <div className="flex justify-center items-center gap-5 my-10">
           <hr className="w-[30%]" />
           <p className="text-xl">Product Detail</p>
@@ -114,13 +106,13 @@ const ShopIndex = () => {
         {
           !loading && (
             <>
-              <div className="flex justify-around items-center my-20">
-                <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[5rem]" />
-                <div className="flex flex-col gap-4">
+              <div className="flex lg:flex-row flex-col justify-around gap-10 items-center my-20">
+                <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[15rem]" />
+                <div className="flex flex-col gap-4 lg:w-[50rem] w-[90%]">
                   <p className="text-4xl">{product?.name}</p>
                   <p className="font-light text-xl">{product?.description}</p>
-                  <p className="text-xl">Sisa <span className="font-semibold">{product?.stock}</span></p>
-                  <p className="text-2xl">Rp {product?.price}</p>
+                  <p className="text-xl text-yellow-400">Sisa <span className="font-semibold">{product?.stock}</span></p>
+                  <p className="text-2xl">{rupiah(product?.price)}</p>
                   <div className="flex h-[2rem]">
                     <button className="w-[2rem] border-[1px]"
                       onClick={() => {

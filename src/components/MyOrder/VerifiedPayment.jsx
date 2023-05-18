@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon } from '@iconify/react'
-
-const VerifiedPayment = () => {
+import Link from 'next/link'
+const VerifiedPayment = ({ data }) => {
   return (
     <div>
       <div className="shadow-xl rounded-2xl flex flex-col items-center p-10 gap-5">
@@ -14,8 +14,8 @@ const VerifiedPayment = () => {
         </div>
       </div>
       <div className="flex justify-center gap-5 my-20">
-        <button className="px-7 py-4 border-[1px] border-red-400 text-red-400 rounded-2xl shadow-sm">Beranda</button>
-        <button className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Pesanan Anda</button>
+        <Link href="/shop" className="px-7 py-4 border-[1px] hover:bg-slate-50 border-red-500 text-red-500 rounded-2xl shadow-sm">Beranda</Link>
+        <Link href={`/shop/my-order/detail/${data?.order_id}`} className="px-7 py-4 bg-red-500 hover:bg-red-600 text-white rounded-2xl shadow-sm">Pesanan Anda</Link>
       </div>
     </div>
   )
