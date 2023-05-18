@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SidebarAdmin from "./SidebarAdmin";
 import Link from "next/link";
 import { Icon } from "@iconify/react";
+import { useSessionUser } from '../contexts/SessionUserContext'
 
 const LayoutAdmin = ({ children }) => {
+  const { refreshTokenAdmin, state } = useSessionUser()
+
+  useEffect(() => {
+    refreshTokenAdmin()
+  }, [state?.userInfo?.userId])
+
   return (
     <>
       <SidebarAdmin />

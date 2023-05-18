@@ -70,6 +70,37 @@ export function SessionUserProvider({children}) {
     return router.push("/login")
   })
 
+  const axiosJWTAdmin = axios.create()
+  axiosJWTAdmin.interceptors.request.use(async(config) => {
+    const currentDate = new Date();
+    // refreshToken()
+
+    // if (state?.expire < Math.floor(Date.now() / 1000)) {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user-admin/token-admin`, {
+        withCredentials: true,
+        // headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+      })
+      config.headers.Authorization = `Bearer ${response.data.data}`
+      dispatch({ type: "setToken", payload: response.data.data})
+      const decoded = jwt_decode(response.data.data)
+      dispatch({ type: "setExpire", payload: decoded.exp})
+      dispatch({ type: "setUserInfo", payload: decoded})
+      dispatch({ type: "setIsLoggedIn", payload: true})
+
+      // setExpire(decoded.exp)
+      console.log(decoded)
+      return config;
+    // } else {
+    //   console.log("gblk")
+    //   return config
+    // }
+  }, (error) => {
+    console.log(error)
+    dispatch({ type: "setIsLoggedIn", payload: false})
+    Promise.reject(error);
+    return router.push("/login-admin")
+  })
+
   const axiosBasic = axios.create()
 
 
@@ -95,7 +126,29 @@ export function SessionUserProvider({children}) {
     }
   }
 
-  const value = {state, dispatch, refreshToken, axiosJWT, axiosBasic}
+  const refreshTokenAdmin = async () => {
+    try {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user-admin/token-admin`, {
+        withCredentials: true,
+        headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+      })
+      console.log(response, response.data.data)
+      const decoded = jwt_decode(response.data.data)
+      // setExpire(decoded.exp)
+      dispatch({ type: "setExpire", payload: decoded.exp })
+      dispatch({ type: "setUserInfo", payload: decoded })
+      dispatch({ type: "setIsLoggedIn", payload: true})
+
+    } catch (error) {
+      dispatch({ type: "setIsLoggedIn", payload: false})
+      if (error.response) {
+        router.push("/login-admin")
+      }
+      console.error(error)
+    }
+  }
+
+  const value = {state, dispatch, refreshToken, axiosJWT, axiosBasic, axiosJWTAdmin, refreshTokenAdmin}
   return <SessionUserContext.Provider value={value}>{children}</SessionUserContext.Provider>
 }
 

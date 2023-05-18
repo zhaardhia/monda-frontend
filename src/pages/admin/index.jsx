@@ -1,20 +1,111 @@
 import LayoutAdmin from "@/components/LayoutAdmin";
 import { Icon } from "@iconify/react";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactEcharts from "echarts-for-react";
-
+import { useSessionUser } from '../../contexts/SessionUserContext'
+import { ClockLoader } from 'react-spinners'
+import moment from "moment";
+import { checkStatusOrder, checkStatusOrderTextColor, checkStatusOrderBgColor, rupiah } from '../../utils/libs'
 const AdminIndex = () => {
+  const { axiosJWTAdmin, refreshTokenAdmin, state } = useSessionUser()
+  const [productFav, setProductFav] = useState()
+  const [loadProduk, setLoadProduk] = useState()
+
+  const [latestUser, setLatestUser] = useState()
+  const [loadUser, setLoadUser] = useState()
+
+  const [latestTransaction, setLatestTransaction] = useState()
+  const [loadTrx, setLoadTrx] = useState()
+
+  const [incomePerMonth, setIncomePerMonth] = useState([])
+  const [loadIncome, setLoadIncome] = useState()
+
+  useEffect(() => {
+    fetchIncome()
+    fetchProductFavorite()
+    fetchLatestUser()
+    fetchLatestTransaction()
+  }, [])
+
+  const fetchProductFavorite = async () => {
+    try {
+      setLoadProduk(true)
+      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/product-admin/best-sellers`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+      console.log(response.data)
+      setProductFav(response.data.data)
+      setLoadProduk(false)
+    } catch (error) {
+      console.error(error)
+      setLoadProduk(false)
+    }
+  }
+
+  const fetchLatestUser = async () => {
+    try {
+      setLoadUser(true)
+      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/user-admin/latest-user`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+      console.log(response.data)
+      setLatestUser(response.data.data)
+      setLoadUser(false)
+    } catch (error) {
+      console.error(error)
+      setLoadUser(false)
+    }
+  }
+
+  const fetchLatestTransaction = async () => {
+    try {
+      setLoadTrx(true)
+      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order-admin/latest-transaction`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+      console.log(response.data)
+      setLatestTransaction(response.data.data)
+      setLoadTrx(false)
+    } catch (error) {
+      console.error(error)
+      setLoadTrx(false)
+    }
+  }
+
+  const fetchIncome = async () => {
+    try {
+      setLoadIncome(true)
+      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order-admin/this-month-income`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+      console.log(response.data)
+      setIncomePerMonth(response.data.data)
+      setLoadIncome(false)
+    } catch (error) {
+      console.error(error)
+      setLoadIncome(false)
+    }
+  }
+
   const option = {
     xAxis: {
       type: "category",
-      data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+      data: ["1 - 5", "6 - 10", "11 - 15", "16 - 20", "21 - 25", "26 - 30"],
     },
     yAxis: {
       type: "value",
     },
     series: [
       {
-        data: [120, 200, 150, 80, 70, 110, 130],
+        data: [incomePerMonth[0]?.amount, incomePerMonth[1]?.amount, incomePerMonth[2]?.amount, incomePerMonth[3]?.amount, incomePerMonth[4]?.amount, incomePerMonth[5]?.amount],
         type: "line",
       },
     ],
@@ -31,7 +122,14 @@ const AdminIndex = () => {
             </div>
             <span className="text-[#71717A]">cek hasil pendapatanmu bulan ini</span>
             <div className="w-full">
-              <ReactEcharts option={option} style={{ height: "400px", padding: 0 }} />
+              {loadIncome && (
+                <div className="w-[5rem] ml-5 mt-5">
+                  <ClockLoader />
+                </div>
+              )}
+              {!loadIncome && incomePerMonth.length > 0 && (
+                <ReactEcharts option={option} style={{ height: "400px", padding: 0 }} />
+              )}
             </div>
           </div>
           <div className="grid grid-cols-2 gap-10 my-10">
@@ -40,36 +138,25 @@ const AdminIndex = () => {
               <span className="font-semibold text-lg">Customer Terbaru</span>
               <div className="mt-3 pr-2">
                 {/* one profile */}
-                <div className="flex px-2 border-b-2 pb-2 my-3 ">
-                  <img src="ikanroa_aboutus.png" alt="" className="w-14" />
-                  <div className="flex justify-between w-full">
-                    <div className="mr-10 ms-3">
-                      <h1 className="font-bold text-lg">Ishaq Matanggwan Wisnu</h1>
-                      <h2 className="font-semibold text-[#88847E]">sihaqmatanggwan@cmail.com</h2>
-                    </div>
-                    <h1 className="flex items-center font-bold text-xl">Rp 50K</h1>
+                {loadUser && (
+                  <div className="w-[5rem] ml-5">
+                    <ClockLoader />
                   </div>
-                </div>
-                <div className="flex px-2 border-b-2 pb-2 my-3">
-                  <img src="ikanroa_aboutus.png" alt="" className="w-14" />
-                  <div className="flex justify-between w-full">
-                    <div className="mr-10 ms-3">
-                      <h1 className="font-bold text-lg">Tri Kusumo Apri</h1>
-                      <h2 className="font-semibold text-[#88847E]">Ghalywa@ymail.com</h2>
+                )}
+                {!loadUser && latestUser?.map((data) => {
+                  return (
+                    <div className="flex px-2 border-b-2 pb-2 my-3 ">
+                      {/* <img src="ikanroa_aboutus.png" alt="" className="w-14" /> */}
+                      <div className="flex justify-between w-full">
+                        <div className="mr-10 ms-3">
+                          <h1 className="font-bold text-lg">{data.fullname}</h1>
+                          <h2 className="font-semibold text-[#88847E]">{data.email}</h2>
+                        </div>
+                        {/* <h1 className="flex items-center font-bold text-xl">Rp 50K</h1> */}
+                      </div>
                     </div>
-                    <h1 className="flex items-center font-bold text-xl">Rp 125K</h1>
-                  </div>
-                </div>
-                <div className="flex px-2 border-b-2 pb-2 my-3">
-                  <img src="ikanroa_aboutus.png" alt="" className="w-14" />
-                  <div className="flex justify-between w-full">
-                    <div className="mr-10 ms-3">
-                      <h1 className="font-bold text-lg">Ghaly Wisnu</h1>
-                      <h2 className="font-semibold text-[#88847E]">Ghalywa@ymail.com</h2>
-                    </div>
-                    <h1 className="flex items-center font-bold text-xl">Rp 125K</h1>
-                  </div>
-                </div>
+                  )
+                })}
               </div>
             </div>
             {/* Product Fav Section */}
@@ -77,36 +164,25 @@ const AdminIndex = () => {
               <span className="font-semibold text-lg">Produk Favorit</span>
               <div className="mt-3 pr-2">
                 {/* Produk Favorit */}
-                <div className="flex px-2 border-b-2 pb-2 my-3 ">
-                  <img src="ikanroa_aboutus.png" alt="" className="w-14" />
-                  <div className="flex justify-between w-full">
-                    <div className="mr-10 ms-3">
-                      <h1 className="font-bold text-lg">Nasi Kuning Monda</h1>
-                      <h2 className="font-semibold text-[#88847E]">2 terjual</h2>
-                    </div>
-                    <h1 className="flex items-center font-bold text-xl">Rp 55K</h1>
+                {loadProduk && (
+                  <div className="w-[5rem] ml-5">
+                    <ClockLoader />
                   </div>
-                </div>
-                <div className="flex px-2 border-b-2 pb-2 my-3">
-                  <img src="ikanroa_aboutus.png" alt="" className="w-14" />
-                  <div className="flex justify-between w-full">
-                    <div className="mr-10 ms-3">
-                      <h1 className="font-bold text-lg">Kebab Ala Monda </h1>
-                      <h2 className="font-semibold text-[#88847E]">1 Terjual</h2>
+                )}
+                {!loadProduk && productFav?.map((data) => {
+                  return (
+                    <div className="flex px-2 border-b-2 pb-2 my-3 ">
+                      <img src="ikanroa_aboutus.png" alt="" className="w-14" />
+                      <div className="flex justify-between w-full">
+                        <div className="mr-10 ms-3">
+                          <h1 className="font-bold text-lg">{data.name}</h1>
+                          <h2 className="font-semibold text-[#88847E]">{data.total_quantity} terjual</h2>
+                        </div>
+                        <h1 className="flex items-center font-bold text-lg">{rupiah(data.total_quantity * data.price)}</h1>
+                      </div>
                     </div>
-                    <h1 className="flex items-center font-bold text-xl">Rp 70K</h1>
-                  </div>
-                </div>
-                <div className="flex px-2 border-b-2 pb-2 my-3">
-                  <img src="ikanroa_aboutus.png" alt="" className="w-14" />
-                  <div className="flex justify-between w-full">
-                    <div className="mr-10 ms-3">
-                      <h1 className="font-bold text-lg">Sambal Roa Olahan</h1>
-                      <h2 className="font-semibold text-[#88847E]">1 Terjual</h2>
-                    </div>
-                    <h1 className="flex items-center font-bold text-xl">Rp 30K</h1>
-                  </div>
-                </div>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -137,42 +213,27 @@ const AdminIndex = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th className="px-6 py-4 text-base text-gray-900 whitespace-nowrap dark:text-white">
-                      <h1 className="font-normal">
-                        Payment failed from <span className="font-bold">#087651</span>
-                      </h1>
-                    </th>
-                    <td className="px-6 py-4 text-base">Apr 23, 2023</td>
-                    <td className="px-6 py-4 font-medium text-gray-900 text-base">Rp50.000,00</td>
-                    <td className="px-6 py-4">
-                      <h1 className="px-3 py-1 text-[#9B1C1C] rounded-[10px] bg-[#FBD5D5] w-24 text-center">Cancelled</h1>
-                    </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th className="px-6 py-4 text-base text-gray-900 whitespace-nowrap dark:text-white">
-                      <h1 className="font-normal">
-                        Payment from <span className="font-bold">Ishaq</span>
-                      </h1>
-                    </th>
-                    <td className="px-6 py-4 text-base">Apr 23, 2023</td>
-                    <td className="px-6 py-4 font-medium text-gray-900 text-base">Rp50.000,00</td>
-                    <td className="px-6 py-4">
-                      <h1 className="px-3 py-1 text-[#03543F] rounded-[10px] bg-[#DEF7EC] w-24 text-center">Verified</h1>
-                    </td>
-                  </tr>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th className="px-6 py-4 text-base text-gray-900 whitespace-nowrap dark:text-white">
-                      <h1 className="font-normal">
-                        Payment refund to <span className="font-bold">#00910</span>
-                      </h1>
-                    </th>
-                    <td className="px-6 py-4 text-base">Apr 23, 2023</td>
-                    <td className="px-6 py-4 font-medium text-gray-900 text-base">Rp50.000,00</td>
-                    <td className="px-6 py-4">
-                      <h1 className="px-3 py-1 text-[#1E429F] rounded-[10px] bg-[#E1EFFE] w-24 text-center">In Progress</h1>
-                    </td>
-                  </tr>
+                  {loadTrx && (
+                    <div className="w-[5rem] ml-5">
+                      <ClockLoader />
+                    </div>
+                  )}
+                  {!loadTrx && latestTransaction?.map((data) => {
+                    return (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th className="px-6 py-4 text-base text-gray-900 whitespace-nowrap dark:text-white">
+                          <h1 className="font-normal">
+                            Payment from <span className="font-bold">{data["user.fullname"]}</span>
+                          </h1>
+                        </th>
+                        <td className="px-6 py-4 text-base">{moment(data.updated_date).format("LL")}</td>
+                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(data.gross_amount)}</td>
+                        <td className="px-6 py-4">
+                          <h1 className={`px-3 py-1 ${checkStatusOrderTextColor(data.status_order)} rounded-[10px] ${checkStatusOrderBgColor(data.status_order)} w-24 text-center`}>{checkStatusOrder(data.status_order)}</h1>
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
             </div>
