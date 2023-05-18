@@ -1,11 +1,25 @@
-import ModalTransaction from "@/components/AdminPage/ModalTransaction";
 import LayoutAdmin from "@/components/LayoutAdmin";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 import React from "react";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 const index = () => {
-  const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+
+  // dummy data
+  const [dataTransaction, setDataTransaction] = useState([
+    {
+      id: "001",
+      status: "Verified",
+    },
+    {
+      id: "002",
+      status: "On Going",
+    },
+  ]);
+
   return (
     <LayoutAdmin>
       <div className="w-full pr-2">
@@ -69,43 +83,30 @@ const index = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
-                    #001
-                  </th>
-                  <td className="px-6 py-4 text-base">Apr 23, 2023</td>
-                  <td className="px-6 py-4 font-medium text-gray-900 text-base">01748274829472847</td>
-                  <td className="px-6 py-4 font-medium text-gray-900 text-base">JNE</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 text-[#03543F] rounded-[10px] bg-[#DEF7EC] ">Verified</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div onClick={() => setShowModal(true)} className="cursor-pointer">
-                      <Icon icon="material-symbols:edit-square-outline-rounded" width={25} className="text-[#624DE3]" />
-                    </div>
-                  </td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
-                    #002
-                  </th>
-                  <td className="px-6 py-4 text-base">Apr 23, 2023</td>
-                  <td className="px-6 py-4 font-medium text-gray-900 text-base">01748274829472847</td>
-                  <td className="px-6 py-4 font-medium text-gray-900 text-base">Ninja Go</td>
-                  <td className="px-6 py-4">
-                    <span className="px-3 py-1 text-slate-800 rounded-[10px] bg-slate-300 ">Not verified</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div onClick={() => setShowModal(true)} className="cursor-pointer">
-                      <Icon icon="material-symbols:edit-square-outline-rounded" width={25} className="text-[#624DE3]" />
-                    </div>
-                  </td>
-                </tr>
+                {dataTransaction?.map((data) => {
+                  return (
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                      <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
+                        {data.id}
+                      </th>
+                      <td className="px-6 py-4 text-base">Apr 23, 2023</td>
+                      <td className="px-6 py-4 font-medium text-gray-900 text-base">01748274829472847</td>
+                      <td className="px-6 py-4 font-medium text-gray-900 text-base">JNE</td>
+                      <td className="px-6 py-4">
+                        <span className={`px-3 py-1 ${data.status === "Verified" ? "text-[#03543F] bg-[#DEF7EC]" : "text-[#CD6200] bg-[#FEF2E5] "}  rounded-[10px] `}>{data.status}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <Link href={`/admin/transaction/detail/${data.id}`} className="p-2 bg-[#DE5959] text-white w-24 rounded-3xl flex items-center justify-center gap-2 cursor-pointer group">
+                          <h1 className="font-semibold">Details</h1>
+                          <Icon icon="material-symbols:keyboard-double-arrow-right" width={20} className="group-hover:translate-x-[6px] duration-300" />
+                        </Link>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
-
-          {showModal ? <ModalTransaction setShowModal={setShowModal} /> : null}
         </div>
       </div>
     </LayoutAdmin>
