@@ -5,6 +5,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import ModalTransaction from "@/components/AdminPage/ModalVerificatonTransaction";
+import { rupiah } from "../../../../utils/libs";
 
 const TransactionDetail = () => {
   const router = useRouter();
@@ -60,16 +61,16 @@ const TransactionDetail = () => {
                 <table className="w-full text-sm mt-3 text-left text-gray-500 dark:text-gray-400">
                   <thead className="border-b-2 border-[#E5E7EB] text-2xl font-bold text-black bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-5 pt-3 pb-5">
+                      <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
                         Items Summary
                       </th>
-                      <th scope="col" className="px-5 pt-3 pb-5">
+                      <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
                         Qty
                       </th>
-                      <th scope="col" className="px-5 pt-3 pb-5">
+                      <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
                         Price
                       </th>
-                      <th scope="col" className="px-5 pt-3 pb-5">
+                      <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
                         Total Price
                       </th>
                     </tr>
@@ -78,13 +79,13 @@ const TransactionDetail = () => {
                     {dataItems?.map((data) => {
                       return (
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                          <td className="px-6 py-5 font-bold text-gray-900 text-base">
+                          <td className="px-6 py-5 font-bold text-base text-[#393734]">
                             <img src="/kebab.png" alt="items" className="inline h-[60px] w-[60px] mr-1 rounded-full object-fill" />
                             {data.name}
                           </td>
-                          <td className="px-6 py-5 text-gray-900 text-base">{data.quantity}x</td>
-                          <td className="px-6 py-5 text-gray-900 text-base">Rp. {Intl.NumberFormat("id").format(data.price)},00</td>
-                          <td className="px-6 py-5 text-gray-900 text-base">Rp. {Intl.NumberFormat("id").format(data.quantity * data.price)},00</td>
+                          <td className="px-6 py-5 text-[#393734] text-base">{data.quantity}x</td>
+                          <td className="px-6 py-5 text-[#393734] text-base">{rupiah(data.price)}</td>
+                          <td className="px-6 py-5 text-[#393734] text-base">{rupiah(data.quantity * data.price)}</td>
                         </tr>
                       );
                     })}
@@ -116,15 +117,15 @@ const TransactionDetail = () => {
               </div>
 
               <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 py-8 mt-4">
-                <h1 className="text-2xl font-bold">Customer & Order Details</h1>
+                <h1 className="text-2xl font-bold text-[#393734]">Customer & Order Details</h1>
                 <div className="grid grid-cols-2 mt-4">
-                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5">Customer Name</div>
+                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5 text-[#393734]">Customer Name</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-2xl text-end pr-6 py-5">Ghaly Wisnu</div>
-                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5">Email</div>
+                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5 text-[#393734]">Email</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-2xl text-end pr-6 py-5">ghalywsnexample@gmail.com</div>
-                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5">Phone Number</div>
+                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5 text-[#393734]">Phone Number</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-2xl text-end pr-6 py-5">081891829832</div>
-                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5">Delivery Courier</div>
+                  <div className="border-t border-[#D3C9C9] text-2xl ps-6 py-5 text-[#393734]">Delivery Courier</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-2xl text-end pr-6 py-5">JNE</div>
                 </div>
               </div>
@@ -133,26 +134,37 @@ const TransactionDetail = () => {
             {/* right section */}
             <div className="w-[378px]">
               <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 py-8 h-[288px] flex flex-col items-center">
-                <h1 className="font-bold text-2xl mb-3">Customer</h1>
+                <h1 className="font-bold text-2xl mb-3 text-[#393734]">Customer</h1>
                 <img src="/kentang.png" alt="user_photo" className="object-cover w-[100px] h-[130px] rounded-full" />
                 <h1 className="font-bold text-3xl text-[#A88653] mt-4">Ghaly Wisnu</h1>
                 <h1 className="text-[#737069] mt-1">Member since May 24, 2023</h1>
               </div>
 
-              <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 py-8 h-[288px] flex flex-col">
-                <h1 className="font-bold text-2xl mb-3">Order Summary</h1>
-                <div className="border-y border-[#D3C9C9] grid grid-cols-2">
-                  <div>Order Created</div>
-                  <div>Sun, May 14, 2023</div>
-                  <div>Order Time</div>
-                  <div>07.29 AM</div>
-                  <div>Subtotal</div>
-                  <div>
-                    {dataItems.reduce((total, num) => {
-                      return total + num.price * num.quantity;
-                    }, 0)}
+              <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 mt-5 py-8 h-[288px] flex flex-col">
+                <h1 className="font-bold text-2xl mb-3 text-[#393734]">Order Summary</h1>
+                <div className=" grid grid-cols-2">
+                  <div className="border-t border-[#D3C9C9] text-[#393734] text-xl mb-3 font-semibold">Order Created</div>
+                  <div className="border-t border-[#D3C9C9] text-end">Sun, May 14, 2023</div>
+                  <div className="text-[#393734] text-xl mb-3 font-semibold">Order Time</div>
+                  <div className="text-end">07.29 AM</div>
+                  <div className="text-[#393734] text-xl mb-3 font-semibold">Subtotal</div>
+                  <div className="text-end">
+                    {rupiah(
+                      dataItems.reduce((total, num) => {
+                        return total + num.price * num.quantity;
+                      }, 0)
+                    )}
                   </div>
+                  <div className="border-b border-[#D3C9C9] text-[#393734] text-xl pb-3 font-semibold">Delivery</div>
+                  <div className="border-b border-[#D3C9C9] text-end">Rp. 8.000,00</div>
+                  <div className="text-[#393734] text-xl mb-3 font-semibold mt-2">Total</div>
+                  <div className="mt-2 text-end">Rp. 173.000,00</div>
                 </div>
+              </div>
+
+              <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 mt-5 py-8 h-[288px] flex flex-col">
+                <h1 className="text-2xl font-bold text-[#393734] pb-4">Delivery Address</h1>
+                <h1 className="text-xl text-[#393734] mt-6">Jl. Suluh Keadilan Blok D5 N0.12, Puri Indah, Kembangan Selatan, Jakarta Barat</h1>
               </div>
             </div>
           </div>
