@@ -7,28 +7,12 @@ import InsertProduct from "@/components/AdminPage/InsertProduct";
 import { useSessionUser } from '../../../contexts/SessionUserContext'
 const ProductIndex = () => {
   const { axiosJWTAdmin, state } = useSessionUser()
-  const [products, setProducts] = useState([
-    { id: "#001", name: "Bango", price: 2000 },
-    { id: "#002", name: "Mie Goreng", price: 21000 },
-    { id: "#003", name: "Kacang Popol", price: 4000 },
-    { id: "#004", name: "Telor Bebek", price: 54000 },
-    { id: "#005", name: "Mie Goreng", price: 21000 },
-    { id: "#006", name: "Mie Goreng", price: 21000 },
-  ]);
+  const [products, setProducts] = useState([]);
   const [loadProduct, setLoadProduct] = useState()
-
-  const [dataForm, setDataForm] = useState();
-  console.log(dataForm);
 
   useEffect(() => {
     getAllProducts();
   }, []);
-
-  // const getAllProducts = async () => {
-  //   try {
-  //     setProducts(response.data.data);
-  //   } catch (error) {}
-  // };
 
   const getAllProducts = async () => {
     try {
@@ -43,7 +27,7 @@ const ProductIndex = () => {
       setLoadProduct(false)
     } catch (error) {
       console.error(error)
-      setLoadTrx(false)
+      setLoadProduct(false)
     }
   }
 

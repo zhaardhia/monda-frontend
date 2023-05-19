@@ -22,7 +22,7 @@ const ShoppingCart = () => {
   useEffect(() => {
     refreshToken()
     fetchUserCart()
-  }, [state.userInfo.userId])
+  }, [state?.userInfo?.userId])
 
   const fetchUserCart = async () => {
     try {

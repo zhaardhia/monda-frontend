@@ -158,7 +158,7 @@ const InsertProduct = () => {
           </div>
           {/* Button Submit */}
           <div className="flex justify-end mt-5 w-[630px]">
-            <button type="submit" className="px-5 py-2 w-64 rounded-[15px] bg-[#DE5959] text-xl text-white font-bold hover:shadow-lg"
+            <button type="submit" className="px-5 py-2 w-64 rounded-[15px] bg-[#DE5959] text-white hover:shadow-lg"
               onClick={submitProduct}
             >
               Upload Product

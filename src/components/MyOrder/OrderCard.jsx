@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { checkStatusOrder, checkStatusOrderBgColor, checkStatusOrderTextColor, myStatusOrderText } from '../../utils/libs'
 import { rupiah } from "../../utils/libs"
 import { useSessionUser } from '../../contexts/SessionUserContext'
+import moment from 'moment'
 
 const OrderCard = ({ data, setData }) => {
   const { axiosJWT, refreshToken, state, dispatch } = useSessionUser()
@@ -56,7 +57,7 @@ const OrderCard = ({ data, setData }) => {
 
       {data?.status_order === "shipment" && (
         <div className="mt-5">
-          <h1 className="text-xl font-light">Order Date: <strong>#00{data?.order_no}</strong></h1>
+          <h1 className="text-xl font-light">Order Date: <strong>{moment(data?.created_date).format("LLL")}</strong></h1>
           <h1 className="text-xl font-light">Delivery To: <strong>{data?.address}</strong></h1>
         </div>
       )}

@@ -2,23 +2,39 @@ import LayoutAdmin from "@/components/LayoutAdmin";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-
+import { useSessionUser } from '../../../contexts/SessionUserContext'
+import moment from "moment";
+import { ClockLoader } from 'react-spinners'
+import { rupiah, checkStatusOrder, checkStatusOrderBgColor, checkStatusOrderTextColor } from '../../../utils/libs'
 const index = () => {
+  const { axiosJWTAdmin, state } = useSessionUser()
   const router = useRouter();
+  const [orders, setOrders] = useState()
+  const [load, setLoad] = useState(false)
 
-  // dummy data
-  const [dataTransaction, setDataTransaction] = useState([
-    {
-      id: "001",
-      status: "Verified",
-    },
-    {
-      id: "002",
-      status: "On Going",
-    },
-  ]);
+
+  useEffect(() => {
+    getAllTransactions()
+  }, [])
+
+  const getAllTransactions = async () => {
+    try {
+      setLoad(true)
+      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order-admin/list-order`, {
+        headers: {
+          Authorization: `Bearer ${state?.token}`
+        }
+      })
+      console.log(response.data)
+      setOrders(response.data.data)
+      setLoad(false)
+    } catch (error) {
+      console.error(error)
+      setLoad(false)
+    }
+  }
 
   return (
     <LayoutAdmin>
@@ -44,7 +60,7 @@ const index = () => {
                 </select>
               </div>
               {/* Search Bar */}
-              <form className="flex items-center ms-2">
+              {/* <form className="flex items-center ms-2">
                 <div className="relative w-full">
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-500">
                     <Icon icon="bx:search-alt" width={20} className="text-[#C2C2C2]" />
@@ -56,56 +72,63 @@ const index = () => {
                     placeholder="Search"
                   />
                 </div>
-              </form>
+              </form> */}
             </div>
             {/* Table */}
-            <table className="w-full text-sm mt-3 text-left text-gray-500 dark:text-gray-400">
-              <thead className="border-b-2 border-[#E5E7EB] text-sm text-[#6B7280] uppercase bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    ORDER ID
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    DATE & TIME
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    NO. RESI
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    SHIPPING
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    STATUS
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    ACTION
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {dataTransaction?.map((data) => {
-                  return (
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                      <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
-                        {data.id}
-                      </th>
-                      <td className="px-6 py-4 text-base">Apr 23, 2023</td>
-                      <td className="px-6 py-4 font-medium text-gray-900 text-base">01748274829472847</td>
-                      <td className="px-6 py-4 font-medium text-gray-900 text-base">JNE</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-3 py-1 ${data.status === "Verified" ? "text-[#03543F] bg-[#DEF7EC]" : "text-[#CD6200] bg-[#FEF2E5] "}  rounded-[10px] `}>{data.status}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <Link href={`/admin/transaction/detail/${data.id}`} className="p-2 bg-[#DE5959] text-white w-24 rounded-3xl flex items-center justify-center gap-2 cursor-pointer group">
-                          <h1 className="font-semibold">Details</h1>
-                          <Icon icon="material-symbols:keyboard-double-arrow-right" width={20} className="group-hover:translate-x-[6px] duration-300" />
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            {load && (
+              <ClockLoader />
+            )}
+
+            {!load && orders?.length > 0 && (
+              <table className="w-full text-sm mt-3 text-left text-gray-500 dark:text-gray-400">
+                <thead className="border-b-2 border-[#E5E7EB] text-sm text-[#6B7280] uppercase bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      ORDER ID
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      ORDER CREATED
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      NAME
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      AMOUNT
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      STATUS
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      ACTION
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders?.map((data) => {
+                    return (
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
+                          00{data?.id}
+                        </th>
+                        <td className="px-6 py-4 text-base">{moment(data?.created_date).format("LL")}</td>
+                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{data?.["user.fullname"]}</td>
+                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(data?.gross_amount)}</td>
+                        <td className="px-6 py-4">
+                          <span className={`px-3 py-1 ${checkStatusOrderBgColor(data?.status_order)} ${checkStatusOrderTextColor(data?.status_order)} rounded-[10px] `}>{checkStatusOrder(data?.status_order)}</span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <Link href={`/admin/transaction/detail/${data?.id}`} className="p-2 bg-[#DE5959] text-white w-24 rounded-3xl flex items-center justify-center gap-2 cursor-pointer group">
+                            <h1 className="">Details</h1>
+                            <Icon icon="material-symbols:keyboard-double-arrow-right" width={20} className="group-hover:translate-x-[6px] duration-300" />
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+            
           </div>
         </div>
       </div>

@@ -51,7 +51,11 @@ const CatalogueCard = ({ data }) => {
 
   return (
     <div className="md:w-[20rem] sm:w-[15rem] w-[10rem] shadow-xl rounded-lg flex flex-col items-center">
-      <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[100%]" />
+      {data?.image ? (
+        <img src={`${process.env.NEXT_PUBLIC_BASE_WEB}${data?.image}`} alt="" className="md:w-[18rem] w-[100%]" />
+      ) : (
+        <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[100%]" />
+      )}
       <div className="w-[90%] my-4 flex flex-col">
         <Link href={`/shop/detail-product/${data?.id}`} className="sm:text-xl text-lg font-semibold">{data?.name}</Link>
         <span className="text-yellow-500">Sisa: {data?.stock}</span>

@@ -93,7 +93,12 @@ const ItemOrdered = ({ data, setCartData, exactData }) => {
   return (
     <div className="flex justify-between md:flex-row flex-col md:items-center p-10 rounded-2xl lg:w-[60rem] md:w-[40rem] w-[100%] shadow-xl mx-auto bg-slate-50">
       <div className="flex md:flex-row flex-col gap-10 items-center">
-        <img src="/sambel-roa.png" alt="" className="md:w-[8rem] w-[10rem] md:block hidden" />
+        {data?.["cart_items.product.image"] ? (
+          <img src={`${process.env.NEXT_PUBLIC_BASE_WEB}${data?.["cart_items.product.image"]}`} alt="" className="md:w-[8rem] w-[10rem] md:block hidden rounded-lg" />
+        ) : (
+          <img src="/sambel-roa.png" alt="" className="md:w-[8rem] w-[10rem] md:block hidden rounded-lg" />
+        )}
+        {/* <img src="/sambel-roa.png" alt="" className="md:w-[8rem] w-[10rem] md:block hidden" /> */}
         <div className="md:hidden flex justify-between w-full">
           <img src="/sambel-roa.png" alt="" className="md:w-[8rem] w-[10rem] md:hidden block" />
           <div className="flex md:hidden justify-end"

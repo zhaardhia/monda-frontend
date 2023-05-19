@@ -38,7 +38,7 @@ const Profile = () => {
 
   useEffect(() => {
     fetchUserInfo()
-  }, [router.query.id])
+  }, [router?.query?.id])
 
   const fetchUserInfo = async () => {
     try {

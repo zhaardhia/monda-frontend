@@ -107,7 +107,12 @@ const ShopIndex = () => {
           !loading && (
             <>
               <div className="flex lg:flex-row flex-col justify-around gap-10 items-center my-20">
-                <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[15rem]" />
+                {/* <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[15rem]" /> */}
+                {product?.image ? (
+                  <img src={`${process.env.NEXT_PUBLIC_BASE_WEB}${product?.image}`} alt="" className="md:w-[18rem] w-[100%]" />
+                ) : (
+                  <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[100%]" />
+                )}
                 <div className="flex flex-col gap-4 lg:w-[50rem] w-[90%]">
                   <p className="text-4xl">{product?.name}</p>
                   <p className="font-light text-xl">{product?.description}</p>
