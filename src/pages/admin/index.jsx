@@ -98,7 +98,7 @@ const AdminIndex = () => {
   const option = {
     xAxis: {
       type: "category",
-      data: ["1 - 5", "6 - 10", "11 - 15", "16 - 20", "21 - 25", "26 - 30"],
+      data: [`${incomePerMonth[0]?.from} - ${incomePerMonth[0]?.to}`, `${incomePerMonth[1]?.from} - ${incomePerMonth[1]?.to}`, `${incomePerMonth[2]?.from} - ${incomePerMonth[2]?.to}`, `${incomePerMonth[3]?.from} - ${incomePerMonth[3]?.to}`, `${incomePerMonth[4]?.from} - ${incomePerMonth[4]?.to}`, `${incomePerMonth[5]?.from} - ${incomePerMonth[5]?.to}`],
     },
     yAxis: {
       type: "value",
@@ -109,6 +109,9 @@ const AdminIndex = () => {
         type: "line",
       },
     ],
+    tooltip: {
+      trigger: "axis"
+    }
   };
   return (
     <LayoutAdmin>
