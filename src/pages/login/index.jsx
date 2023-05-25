@@ -8,13 +8,14 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { animateVibrate } from "../../animations/animationFade";
-
+import { useSessionUser } from '../../contexts/SessionUserContext'
 const Login = () => {
+  const { refreshToken } = useSessionUser()
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msgError, setMsgError] = useState(null);
-
+  const [visiblePass, setVisiblePass] = useState(false)
   const submitUser = async () => {
     console.log("tes");
     console.log({ email, password });
@@ -33,6 +34,7 @@ const Login = () => {
         }
       );
       setMsgError(null);
+      refreshToken()
       router.push("/shop");
     } catch (error) {
       console.error(error.response.data.message);
@@ -74,13 +76,27 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <input
-                  type="text"
-                  placeholder="Kata Sandi"
-                  className="sm:w-[20rem] w-[95%] rounded-2xl bg-[#C8C6C6] text-[#666666] font-semibold sm:text-base text-sm"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <div className="flex flex-col gap-2">
+                  <input
+                    type={visiblePass ? "text" : "password"}
+                    placeholder="Kata Sandi"
+                    className="sm:w-[20rem] w-[95%] rounded-2xl bg-[#C8C6C6] text-[#666666] font-semibold sm:text-base text-sm"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="flex gap-3 items-center">
+                    <input
+                      type="checkbox"
+                      className="focus:border-0"
+                      checked={visiblePass}
+                      onChange={(e) => setVisiblePass(e.target.checked)}
+                    />
+                    <p className="text-slate-100 text-sm">Buka Password</p>
+                  </div>
+
+                </div>
+                
+
                 <div className="flex w-full justify-end">
                   <Link href="/forgot-password" className="text-white underline">
                     Lupa kata sandi?
@@ -101,9 +117,9 @@ const Login = () => {
                 <button type="submit" className="bg-[#DE5959] hover:bg-[#df5f5f] text-white text-xl px-7 py-2 rounded-xl" onClick={() => submitUser()}>
                   Masuk
                 </button>
-                <button type="submit" className="border-white border-[1px] hover:bg-[#df5f5f] text-white text-xl px-7 py-2 rounded-xl">
+                <Link href="/login-admin" type="submit" className="border-white border-[1px] hover:bg-[#df5f5f] text-white text-xl px-7 py-2 rounded-xl">
                   Masuk Admin
-                </button>
+                </Link>
               </div>
               <p className="text-[#716E6B] text-center">
                 Belum memiliki akun?{" "}

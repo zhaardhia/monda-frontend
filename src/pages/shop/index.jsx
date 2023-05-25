@@ -8,6 +8,7 @@ import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import { useSessionUser } from '../../contexts/SessionUserContext'
 import { BarLoader } from "react-spinners";
+import Link from 'next/link'
 
 const ShopIndex = () => {
   const router = useRouter()
@@ -49,9 +50,9 @@ const ShopIndex = () => {
   return (
     <LayoutShop>
       <div className="md:w-[90%] w-[100%] md:mx-0 mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl">Hi<span className="text-[#A88653]">, {state.userInfo.name}!</span></h1>
-          <SearchBar />
+        <div className="flex justify-between items-center mb-8 mt-10">
+          <h1 className="text-2xl">Hi<span className="text-[#A88653]">, {state.userInfo.name ? state.userInfo.name : "Let's login to continue"}!</span></h1>
+          {/* <SearchBar /> */}
         </div>
         <BannerWelcome />
         <div className="flex justify-center items-center gap-5 my-10">
@@ -75,7 +76,12 @@ const ShopIndex = () => {
         }
         {
           !loading && (
-            <CatalogueContainer products={products} />
+            <div className="flex flex-col gap-10 my-10">
+              <div className="flex justify-end">
+                <Link href="/shop/shopping-cart" className="py-2 px-5 rounded-lg bg-blue-300 hover:bg-blue-400 text-white">Cek Keranjang</Link>
+              </div>
+              <CatalogueContainer products={products} />
+            </div>
           )
         }
       </div>

@@ -97,7 +97,6 @@ const Profile = () => {
   }
 
   const updateUserInfo = async () => {
-    console.log(address.length)
     if (!firstName) setErrorMsg("First name / nama depan harus diisi!")
     else if (!email) setErrorMsg("Email harus diisi!")
     else if (!phone) setErrorMsg("Nomor telepon / whatsapp harus diisi!")

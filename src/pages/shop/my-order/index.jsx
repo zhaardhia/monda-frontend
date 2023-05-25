@@ -5,39 +5,43 @@ import Link from 'next/link'
 import Select from 'react-select'
 import OrderCard from '@/components/MyOrder/OrderCard'
 import { useSessionUser } from '../../../contexts/SessionUserContext'
-//Import Tables
-import $ from "jquery";
-import DataTable from "datatables.net";
-import "datatables.net-buttons";
-import "datatables.net-buttons/js/buttons.html5.js";
 import moment from 'moment'
 import { checkStatusOrder, rupiah, checkStatusOrderBgColor, checkStatusOrderTextColor } from "../../../utils/libs"
 import { BarLoader } from "react-spinners";
 
 const MyOrder = () => {
+  const chooseOrderStatus = [
+    { value: "", label: 'All' },
+    { value: "completed", label: 'Completed' },
+    { value: "shipment", label: 'Shipment' },
+    { value: "paid_verified", label: 'Paid Verified' },
+    { value: "paid_unverified", label: 'Paid Unverified' },
+    { value: "not_paid", label: 'Not Paid' },
+  ]
+
+  const chooseOrderByType = [
+    { value: ["order_no", "ASC"], label: 'Order Number (dari terbaru hingga terbaru)' },
+    { value: ["order_no", "DESC"], label: 'Order Number (dari terlama hingga terlama)' },
+    { value: ["status_order", "ASC"], label: 'Status dari abjad awal hingga akhir' },
+    { value: ["status_order", "DESC"], label: 'Status dari abjad akhir hingga awal' },
+  ]
+
   const { axiosJWT, refreshToken, state, dispatch } = useSessionUser()
   const [isLoading, setIsLoading] = useState(true)
   const [orderList, setOrderList] = useState([])
-  let tableInit = null
-  // const DataTable = DataTables(window, $);
-  const chooseOrderType = [
-    { value: 'sedang_berlangsung', label: 'Sedang Berlangsung' },
-    { value: 'selesai', label: 'Selesai' },
-  ]
+  const [orderBy, setOrderBy] = useState(chooseOrderByType[1].value[0])
+  const [orderBySort, setOrderBySort] = useState(chooseOrderByType[1].value[1])
+  const [orderType, setOrderType] = useState(chooseOrderStatus[0].value)
 
   useEffect(() => {
     setOrderList()
     getData();
-  }, [state.userInfo.userId])
-
-  useEffect(() => {
-    createTable();
-  }, [orderList]);
+  }, [state.userInfo.userId, orderType, orderBy, orderBySort])
 
   const getData = async () => {
     try {
       setIsLoading(true)
-      const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order/list-order?user_id=${state.userInfo.userId}`, {
+      const response = await axiosJWT.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order/list-order?user_id=${state.userInfo.userId}&status_order=${orderType}&order=${orderBy}&orderType=${orderBySort}`, {
         withCredentials: true,
         headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
       })
@@ -51,34 +55,6 @@ const MyOrder = () => {
     }
   };
 
-  const createTable = () => {
-    tableInit = new DataTable("#table", {
-      pagingType: "full_numbers",
-      pageLength: 10,
-      processing: true,
-      scrollX: true,
-      responsive: true,
-      destroy: true,
-      dom: "Blfrtip",
-      search: {
-        className: "input-search mr-4",
-      },
-      buttons: [],
-      lengthMenu: [
-        [10, 20, 30, 50, -1],
-        [10, 20, 30, 50, "All"],
-      ],
-      columns: [
-        { width: "150px" },
-        { width: "150px" },
-        { width: "150px" },
-        { width: "150px" },
-        { width: "150px" }
-      ],
-    });
-  };
-
-
   return (
     <LayoutShop>
       <div className="w-[90%]">
@@ -89,16 +65,42 @@ const MyOrder = () => {
           </div>
           <div className="flex justify-between">
             <p>Lihat pesanan anda tertera di bawah ini</p>
-            <Select
-              className="basic-single w-[30%]"
-              classNamePrefix="select"
-              // defaultValue={chooseCourier[0]}
-              // isLoading={isLoading}
-              isClearable={false}
-              isSearchable={false}
-              name="orderType"
-              options={chooseOrderType}
-            />
+            <div className="w-[30%] flex flex-col gap-5">
+              <div>
+                <label>Filter Status Order:</label>
+                <Select
+                  className="basic-single w-[100%]"
+                  classNamePrefix="select"
+                  defaultValue={chooseOrderStatus[0]}
+                  // isLoading={isLoading}
+                  isClearable={false}
+                  isSearchable={false}
+                  name="orderType"
+                  options={chooseOrderStatus}
+                  onChange={(e) => {
+                    setOrderType(e.value)
+                  }}
+                />
+              </div>
+              <div>
+                <label>Urutkan Berdasarkan:</label>
+                <Select
+                  className="basic-single w-[100%]"
+                  classNamePrefix="select"
+                  defaultValue={chooseOrderByType[1]}
+                  // isLoading={isLoading}
+                  isClearable={false}
+                  isSearchable={false}
+                  name="orderType"
+                  options={chooseOrderByType}
+                  onChange={(e) => {
+                    setOrderBy(e.value[0])
+                    setOrderBySort(e.value[1])
+                  }}
+                />
+              </div>
+            </div>
+            
           </div>
         </div>
 

@@ -88,7 +88,7 @@ const Address = ({ id, delivery_location, setCartData, cartData, city_shopping, 
       <div className="flex justify-between w-[100%] sm:flex-row flex-col sm:gap-0 gap-5">
         <p className="text-2xl">Alamat</p>
         {!userInfo?.address ? (
-          <p className="text-sm">You haven't filled your address in profile page. <Link href="/profile" className="underline">Fill it now</Link></p>
+          <p className="text-sm">Kamu belum mengisi alamat di profile kamu. <Link href={`/profile/${state?.userInfo?.userId}`} className="underline">Isi sekarang</Link></p>
         ) : (
           <button className="px-5 py-2 bg-blue-400 hover:bg-blue-300 text-white rounded-xl shadow-lg"
             onClick={() => useAddressProfile()}

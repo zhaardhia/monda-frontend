@@ -27,7 +27,7 @@ const HomeSection = () => {
           whileInView={"onscreen"}
           viewport={{once:true}}
           transition={{staggerChildren:0.5}}
-          variants={animateFromLeft}
+          variants={animateOpacity}
         >
           <p className="text-2xl text-[#A88653]">Halo Monders, selamat datang di</p>
           <h1 className="md:text-6xl text-4xl">MONDA KITCHEN</h1>
@@ -44,7 +44,7 @@ const HomeSection = () => {
           whileInView={"onscreen"}
           viewport={{once:true}}
           transition={{staggerChildren:0.5}}
-          variants={animateFromRight}
+          variants={animateOpacity}
         />
       </div>
     </div>

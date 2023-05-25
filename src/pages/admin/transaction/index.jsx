@@ -7,22 +7,45 @@ import { useRouter } from "next/router";
 import { useSessionUser } from '../../../contexts/SessionUserContext'
 import moment from "moment";
 import { ClockLoader } from 'react-spinners'
+import Select from 'react-select'
 import { rupiah, checkStatusOrder, checkStatusOrderBgColor, checkStatusOrderTextColor } from '../../../utils/libs'
 const index = () => {
   const { axiosJWTAdmin, state } = useSessionUser()
   const router = useRouter();
+
+  const chooseOrderStatus = [
+    { value: "", label: 'All' },
+    { value: "completed", label: 'Completed' },
+    { value: "shipment", label: 'Shipment' },
+    { value: "paid_verified", label: 'Paid Verified' },
+    { value: "paid_unverified", label: 'Paid Unverified' },
+    { value: "not_paid", label: 'Not Paid' },
+  ]
+
+  const chooseOrderByType = [
+    { value: ["created_date", "ASC"], label: 'Tanggal dibuat transaksi (dari terbaru hingga terbaru)' },
+    { value: ["created_date", "DESC"], label: 'Tanggal dibuat transaksi (dari terlama hingga terlama)' },
+    { value: ["status_order", "ASC"], label: 'Status dari abjad awal hingga akhir' },
+    { value: ["status_order", "DESC"], label: 'Status dari abjad akhir hingga awal' },
+  ]
+
   const [orders, setOrders] = useState()
   const [load, setLoad] = useState(false)
+  const [orderBy, setOrderBy] = useState(chooseOrderByType[1].value[0])
+  const [orderBySort, setOrderBySort] = useState(chooseOrderByType[1].value[1])
+  const [orderType, setOrderType] = useState(chooseOrderStatus[0].value)
+
 
 
   useEffect(() => {
     getAllTransactions()
-  }, [])
+  }, [orderType, orderBy, orderBySort])
 
   const getAllTransactions = async () => {
     try {
       setLoad(true)
-      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order-admin/list-order`, {
+      const response = await axiosJWTAdmin.get(`${process.env.NEXT_PUBLIC_BASE_URL}/v1/order-admin/list-order?status_order=${orderType}&order=${orderBy}&orderType=${orderBySort}`, {
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${state?.token}`
         }
@@ -47,7 +70,7 @@ const index = () => {
           {/* Section Filtering */}
           <div className="border-[1px] rounded-xl px-5 py-7 my-3">
             <div className="flex flex-row pb-3 items-center gap-3">
-              <h1 className="font-semibold text-lg">Sort By :</h1>
+              {/* <h1 className="font-semibold text-lg">Sort By :</h1>
               <div>
                 <select
                   id="small"
@@ -58,6 +81,45 @@ const index = () => {
                   <option value="status">STATUS</option>
                   <option value="shipping">SHIPPING</option>
                 </select>
+              </div> */}
+              <div className="flex justify-between">
+                <p>Lihat pesanan anda tertera di bawah ini</p>
+                <div className="w-[30%] flex flex-col gap-5">
+                  <div>
+                    <label>Filter Status Order:</label>
+                    <Select
+                      className="basic-single w-[100%]"
+                      classNamePrefix="select"
+                      defaultValue={chooseOrderStatus[0]}
+                      // isLoading={isLoading}
+                      isClearable={false}
+                      isSearchable={false}
+                      name="orderType"
+                      options={chooseOrderStatus}
+                      onChange={(e) => {
+                        setOrderType(e.value)
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label>Urutkan Berdasarkan:</label>
+                    <Select
+                      className="basic-single w-[100%]"
+                      classNamePrefix="select"
+                      defaultValue={chooseOrderByType[1]}
+                      // isLoading={isLoading}
+                      isClearable={false}
+                      isSearchable={false}
+                      name="orderType"
+                      options={chooseOrderByType}
+                      onChange={(e) => {
+                        setOrderBy(e.value[0])
+                        setOrderBySort(e.value[1])
+                      }}
+                    />
+                  </div>
+                </div>
+                
               </div>
               {/* Search Bar */}
               {/* <form className="flex items-center ms-2">

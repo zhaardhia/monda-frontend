@@ -11,7 +11,7 @@ const MondaInfo = () => {
       whileInView={"onscreen"}
       viewport={{once:true}}
       transition={{staggerChildren:0.5}}
-      variants={animateOpacity}
+      variants={animateFromAboveSlower}
     >
       <div className="flex justify-center items-center mt-10">
         <hr className="w-[100%]" />
