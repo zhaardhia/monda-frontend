@@ -57,11 +57,11 @@ const ShoppingCart = () => {
         <div className="w-[90%] md:mx-0 mx-auto">
           <div className="flex my-10">
               <Icon icon="material-symbols:shopping-cart-outline" width={30} className="text-[#A88653]" />
-              <span className="text-slate-800 text-2xl">Your Cart</span>
+              <span className="text-slate-800 text-2xl">Keranjang Kamu</span>
           </div>
           <div className="flex justify-center items-center gap-5 my-10">
             <hr className="w-[30%]" />
-            <p className="text-xl">Please fill the delivery information down below here:</p>
+            <p className="text-xl">Silahkan isi informasi pengiriman di bawah ini:</p>
             <hr className="w-[30%]" />
           </div>
           <div className="flex flex-col gap-5">
@@ -83,7 +83,7 @@ const ShoppingCart = () => {
 
           </div>
           <div className={`flex justify-center mt-20 ${!msgError && "mb-20"}`}>
-            <button onClick={proceedLinkToPayment} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Proceed to Payment</button>
+            <button onClick={proceedLinkToPayment} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Proses Pembayaran</button>
           </div>
           <motion.div
             className={`border-2 border-red-500 rounded-xl p-2 ${msgError ? "block" : "hidden"} md:w-[30rem] w-full mx-auto mt-10 mb-20`}

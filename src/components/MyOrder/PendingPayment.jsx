@@ -79,7 +79,7 @@ const PendingPayment = ({ data }) => {
         <p className="text-red-500 text-center">{msgError}</p>
       </motion.div>
       <div className="flex justify-center my-20">
-        <button onClick={() => setShowModalConfirm(true)} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Cancel Order</button>
+        <button onClick={() => setShowModalConfirm(true)} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm">Batalkan Order</button>
       </div>
       {showModalConfirm && (
         <>

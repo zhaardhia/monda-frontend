@@ -11,12 +11,12 @@ import { BarLoader } from "react-spinners";
 
 const MyOrder = () => {
   const chooseOrderStatus = [
-    { value: "", label: 'All' },
-    { value: "completed", label: 'Completed' },
-    { value: "shipment", label: 'Shipment' },
-    { value: "paid_verified", label: 'Paid Verified' },
-    { value: "paid_unverified", label: 'Paid Unverified' },
-    { value: "not_paid", label: 'Not Paid' },
+    { value: "", label: 'Semua' },
+    { value: "completed", label: 'Selesai' },
+    { value: "shipment", label: 'Sedang Dikirim' },
+    { value: "paid_verified", label: 'Terbayar, Sudah Diverifikasi' },
+    { value: "paid_unverified", label: 'Terbayar, Belum Diverifikasi' },
+    { value: "not_paid", label: 'Belum Dibayar' },
   ]
 
   const chooseOrderByType = [
@@ -61,7 +61,7 @@ const MyOrder = () => {
         <div className="my-10 flex flex-col gap-3">
           <div className="flex gap-3 items-center ">
             <Icon icon="mdi:credit-card-fast-outline" width={40} className="text-[#A88653]" />
-            <span className="text-slate-800 text-2xl">Your Order</span>
+            <span className="text-slate-800 text-2xl">Pesanan Anda</span>
           </div>
           <div className="flex justify-between">
             <p>Lihat pesanan anda tertera di bawah ini</p>
@@ -172,16 +172,16 @@ const MyOrder = () => {
                       ORDER ID
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      DATE & TIME
+                      TANGGAL & JAM
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      AMOUNT
+                      JUMLAH
                     </th>
                     <th scope="col" className="px-6 py-3">
                       STATUS
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      ACTION
+                      DETAIL
                     </th>
                   </tr>
                 </thead>
@@ -193,7 +193,7 @@ const MyOrder = () => {
                           #00{item.order_no}
                         </td>
                         <td className="px-6 py-4 text-base">{moment(item.updated_date).format("LLL")}</td>
-                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(item.gross_amount)}</td>
+                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(+item.gross_amount + +item.delivery_fee + +item.transfer_fee)}</td>
                         <td className="px-6 py-4">
                           <span className={`px-3 py-1 ${checkStatusOrderTextColor(item.status_order)} rounded-[10px] ${checkStatusOrderBgColor(item.status_order)}`}>{checkStatusOrder(item.status_order)}</span>
                         </td>

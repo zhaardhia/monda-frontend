@@ -7,7 +7,7 @@ import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 import { useRouter } from 'next/router'
 import { useSessionUser } from '../../contexts/SessionUserContext'
-import { BarLoader } from "react-spinners";
+import { BarLoader, DotLoader } from "react-spinners";
 import Link from 'next/link'
 
 const ShopIndex = () => {
@@ -51,13 +51,13 @@ const ShopIndex = () => {
     <LayoutShop>
       <div className="md:w-[90%] w-[100%] md:mx-0 mx-auto">
         <div className="flex justify-between items-center mb-8 mt-10">
-          <h1 className="text-2xl">Hi<span className="text-[#A88653]">, {state.userInfo.name ? state.userInfo.name : "Let's login to continue"}!</span></h1>
+          <h1 className="text-2xl">Hi<span className="text-[#A88653]">, {state.userInfo.name ? state.userInfo.name : "Anda dapat login terlebih dahulu untuk melanjutkan belanja"}!</span></h1>
           {/* <SearchBar /> */}
         </div>
         <BannerWelcome />
         <div className="flex justify-center items-center gap-5 my-10">
           <hr className="w-[30%]" />
-          <p className="text-xl">Our Products</p>
+          <p className="text-xl">Produk Kami</p>
           <hr className="w-[30%]" />
         </div>
         {

@@ -19,7 +19,7 @@ const TransactionDetail = () => {
   const [showModalVerifPayment, setShowModalVerifPayment] = useState(false)
   const [order, setOrder] = useState()
   const [load, setLoad] = useState(false)
-
+  console.log({order})
   const [resi, setResi] = useState()
   const [onEditResi, setOnEditResi] = useState()
 
@@ -93,16 +93,16 @@ const TransactionDetail = () => {
                   <thead className="border-b-2 border-[#E5E7EB] text-xl font-bold text-black bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
-                        Items Summary
+                        Detail Item Pesanan
                       </th>
                       <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
                         Qty
                       </th>
                       <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
-                        Price
+                        Harga
                       </th>
                       <th scope="col" className="px-5 pt-3 pb-5 text-[#393734]">
-                        Total Price
+                        Total Harga
                       </th>
                     </tr>
                   </thead>
@@ -153,15 +153,15 @@ const TransactionDetail = () => {
               {showModalVerifPayment ? <ModalTransaction type="to_verif_payment" setShowModal={setShowModalVerifPayment} order_id={order?.id} /> : null}
 
               <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 py-8 mt-4">
-                <h1 className="text-xl font-bold text-[#393734]">Customer & Order Details</h1>
+                <h1 className="text-xl font-bold text-[#393734]">Customer & Detail Order</h1>
                 <div className="grid grid-cols-2 mt-4">
-                  <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Customer Name</div>
+                  <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Nama Customer</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-lg text-end pr-6 py-5">{order?.["user.fullname"]}</div>
                   <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Email</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-lg text-end pr-6 py-5">{order?.["user.email"]}</div>
-                  <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Phone Number</div>
+                  <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Nomor HP Customer</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-lg text-end pr-6 py-5">{order?.["user.phone"]}</div>
-                  <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Delivery Courier</div>
+                  <div className="border-t border-[#D3C9C9] text-lg ps-6 py-5 text-[#393734]">Kurir</div>
                   <div className="border-t border-[#D3C9C9] text-[#A88653] text-lg text-end pr-6 py-5">{order?.courier.toUpperCase()}</div>
                 </div>
               </div>
@@ -173,7 +173,7 @@ const TransactionDetail = () => {
                 <h1 className="font-bold text-xl mb-3 text-[#393734]">Customer</h1>
                 {/* <img src="/kentang.png" alt="user_photo" className="object-cover w-[100px] h-[130px] rounded-full" /> */}
                 <h1 className="font-bold text-lg text-[#A88653] mt-4">{order?.["user.fullname"]}</h1>
-                <h1 className="text-[#737069] mt-1">Member since {moment(order?.["user.created_date"]).format("LL")}</h1>
+                <h1 className="text-[#737069] mt-1">Member sejak {moment(order?.["user.created_date"]).format("LL")}</h1>
               </div>
 
               {order?.status_order === "paid_verified" && onEditResi && (
@@ -188,7 +188,7 @@ const TransactionDetail = () => {
                         setOnEditResi(false)
                       }}
                     >
-                      <h1>Cancel</h1>
+                      <h1>Batalkan</h1>
                     </button>
                     <button
                       className="w-[267.17px] h-10 px-3 py-2 bg-[#DE5959] flex items-center justify-center gap-3 text-white rounded-2xl hover:bg-[#db4040] hover:shadow-md"
@@ -214,7 +214,7 @@ const TransactionDetail = () => {
                 </div>
               )}
 
-              <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 mt-5 py-4 h-[288px] flex flex-col">
+              <div className="rounded-[26px] shadow-[0_3px_10px_rgb(0,0,0,0.2)] px-7 mt-5 py-4 flex flex-col">
                 <h1 className="font-bold text-xl mb-3 text-[#393734]">Order Summary</h1>
                 <hr className="border-t border-[#D3C9C9] mb-5"/>
                 <div className=" grid grid-cols-2">
@@ -228,10 +228,16 @@ const TransactionDetail = () => {
                       order?.gross_amount
                     )}
                   </div>
+                  <div className="text-[#393734] text-lg mb-3 font-semibold">Fee Admin</div>
+                  <div className="text-end">
+                    {rupiah(
+                      +order?.transfer_fee
+                    )}
+                  </div>
                   <div className="border-b border-[#D3C9C9] text-[#393734] text-lg pb-3 font-semibold">Delivery</div>
                   <div className="border-b border-[#D3C9C9] text-end">{rupiah(order?.delivery_fee)}</div>
                   <div className="text-[#393734] text-lg mb-3 font-semibold mt-2">Total</div>
-                  <div className="mt-2 text-end">Rp. 173.000,00</div>
+                  <div className="mt-2 text-end">{rupiah(+order?.gross_amount + +order?.transfer_fee + +order?.delivery_fee)}</div>
                 </div>
               </div>
 

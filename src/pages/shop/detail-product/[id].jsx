@@ -86,7 +86,7 @@ const ShopIndex = () => {
       <div className="w-[90%] md:mx-0 mx-auto">
         <div className="flex justify-center items-center gap-5 my-10">
           <hr className="w-[30%]" />
-          <p className="text-xl">Product Detail</p>
+          <p className="text-xl">Detail Product</p>
           <hr className="w-[30%]" />
         </div>
         {
@@ -105,11 +105,11 @@ const ShopIndex = () => {
         }
         {
           !loading && (
-            <>
-              <div className="flex lg:flex-row flex-col justify-around gap-10 items-center my-20">
+            <div className="rounded-lg shadow-xl">
+              <div className="flex lg:flex-row flex-col justify-between mx-auto gap-10 items-center mt-20 mb-10 py-10 w-[90%]">
                 {/* <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[15rem]" /> */}
                 {product?.image ? (
-                  <img src={`${process.env.NEXT_PUBLIC_BASE_WEB}${product?.image}`} alt="" className="md:w-[18rem] w-[100%]" />
+                  <img src={`${process.env.NEXT_PUBLIC_BASE_WEB}${product?.image}`} alt="" className="md:w-[18rem] w-[100%] rounded-lg" />
                 ) : (
                   <img src="/sambel-roa.png" alt="" className="md:w-[18rem] w-[100%]" />
                 )}
@@ -139,14 +139,19 @@ const ShopIndex = () => {
                     </div>
                   </div>
                 </div>
+                
               </div>
-            </>
+              <div className="w-[90%] mx-auto pb-10">
+                <button
+                  className="py-3 px-5 bg-red-500 hover:bg-red-600 text-white rounded-2xl"
+                  onClick={() => router.push("/shop")}
+                >Kembali</button>
+              </div>
+              
+            </div>
           )
         }
-        <button
-          className="py-3 px-5 bg-slate-400 text-white rounded-2xl ml-12"
-          onClick={() => router.push("/shop")}
-        >Kembali</button>
+        
       </div>
     </LayoutShop>
   )

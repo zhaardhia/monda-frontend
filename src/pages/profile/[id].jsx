@@ -160,7 +160,7 @@ const Profile = () => {
             <div className="my-10 flex flex-col gap-3">
               <div className="flex gap-3 items-center ">
                 <Icon icon="gg:profile" width={30} className="text-[#A88653]" />
-                <span className="text-slate-800 text-2xl">Your Profile</span>
+                <span className="text-slate-800 text-2xl">Profil Kamu</span>
               </div>
             </div>
             <motion.div className="lg:w-[50rem] w-[80%] flex flex-col gap-4 justify-center mx-auto"
@@ -172,13 +172,13 @@ const Profile = () => {
             >
               <div className="flex justify-between lg:flex-row flex-col">
                 <div className="flex flex-col">
-                  <label className="text-lg text-slate-700">First Name</label>
+                  <label className="text-lg text-slate-700">Nama Depan</label>
                   <input type="text" value={firstName} defaultValue={firstName} className="rounded-md sm:w-[23rem] w-full bg-white border border-slate-300 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" disabled={!onEdit} 
                     onChange={(e) => setFirstName(e.target.value)} 
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-lg text-slate-700">Last Name</label>
+                  <label className="text-lg text-slate-700">Nama Belakang</label>
                   <input type="text" value={lastName} defaultValue={lastName} className="rounded-md sm:w-[23rem] w-full bg-white border border-slate-300 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" disabled={!onEdit} 
                     onChange={(e) => setLastName(e.target.value)}
                   />
@@ -192,20 +192,20 @@ const Profile = () => {
                 />
               </div>
               <div className="flex flex-col w-full">
-                <label className="text-lg text-slate-700">Address</label>
+                <label className="text-lg text-slate-700">Alamat</label>
                 <textarea type="text" value={address} defaultValue={address} className="rounded-md lg:w-[50rem] md:h-auto h-[10rem] w-full bg-white border border-slate-300 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" disabled={!onEdit} 
                   onChange={(e) => setAddress(e.target.value)}
                 />
               </div>
               <div className="flex flex-col w-full">
-                <label className="text-lg text-slate-700">Contact Number (Whatsapp)</label>
+                <label className="text-lg text-slate-700">No. Telepon (Whatsapp)</label>
                 <input type="text" value={phone} defaultValue={email} className="rounded-md lg:w-[50rem] w-full bg-white border border-slate-300 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" disabled={!onEdit} 
                   onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
               <div className="flex justify-between lg:flex-row flex-col">
                 <div className="flex flex-col">
-                  <label className="text-lg text-slate-700">City</label>
+                  <label className="text-lg text-slate-700">Kota</label>
                   <Select
                     className="basic-single sm:w-[23rem] w-full"
                     classNamePrefix="select"
@@ -227,7 +227,7 @@ const Profile = () => {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label className="text-lg text-slate-700">Postal Code</label>
+                  <label className="text-lg text-slate-700">Kode Pos</label>
                   <input type="text" value={postalCode} defaultValue={postalCode} className="rounded-md sm:w-[23rem] w-full bg-white border border-slate-300 disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" disabled={!onEdit} 
                     onChange={(e) => setPostalCode(e.target.value)}
                   />

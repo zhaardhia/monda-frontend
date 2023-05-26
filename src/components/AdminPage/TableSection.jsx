@@ -13,13 +13,13 @@ const TableSectionAdmin = ({ orders }) => {
               ORDER ID
             </th>
             <th scope="col" className="px-6 py-3">
-              DATE & TIME
+              TANGGAL & JAM
             </th>
             <th scope="col" className="px-6 py-3">
               NO. RESI
             </th>
             <th scope="col" className="px-6 py-3">
-              SHIPPING
+              KURIR
             </th>
             <th scope="col" className="px-6 py-3">
               STATUS
@@ -36,7 +36,7 @@ const TableSectionAdmin = ({ orders }) => {
                 <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
                   {data?.id}
                 </th>
-                <td className="px-6 py-4 text-base">{moment(data?.created_date).format("LL")}</td>
+                <td className="px-6 py-4 text-base">{moment(data?.created_date).format("LLL")}</td>
                 <td className="px-6 py-4 font-medium text-base text-gray-900">{data?.resi}</td>
                 <td className="px-6 py-4 font-medium text-base text-gray-900">{data?.courier.toUpperCase()}</td>
                 <td className="px-6 py-4">

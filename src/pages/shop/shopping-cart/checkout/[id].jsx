@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useSessionUser } from '../../../../contexts/SessionUserContext'
 import { motion } from "framer-motion";
 import { animateVibrate } from "../../../../animations/animationFade";
-import { CircleLoader } from "react-spinners";
+import { DotLoader } from "react-spinners";
 
 const Checkout = () => {
   const router = useRouter()
@@ -71,7 +71,7 @@ const Checkout = () => {
             <span className="text-slate-800 text-2xl">Transfer Bank (Virtual Account)</span>
           </div>
           <hr />
-          <div className="my-5 flex justify-between items-center"
+          <div className="my-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
             onClick={() => handleBank("bca")}
           >
             <div className="flex gap-5 items-center">
@@ -83,7 +83,7 @@ const Checkout = () => {
             )}
           </div>
           <hr />
-          <div className="my-5 flex justify-between items-center"
+          <div className="my-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
             onClick={() => handleBank("bni")}
           >
             <div className="flex gap-5 items-center">
@@ -95,7 +95,7 @@ const Checkout = () => {
             )}
           </div>
           <hr />
-          <div className="my-5 flex justify-between items-center"
+          <div className="my-5 flex justify-between items-center cursor-pointer hover:bg-slate-50"
             onClick={() => handleBank("bri")}
           >
             <div className="flex gap-5 items-center">
@@ -119,8 +119,8 @@ const Checkout = () => {
           <p className="text-red-500 text-center">{msgError}</p>
         </motion.div>
         <div className="flex justify-center my-20">
-          <button onClick={checkout} className="px-7 py-4 bg-red-500 hover:bg-red-300 text-white rounded-2xl shadow-sm" disabled={loadCheckout}>
-            {loadCheckout ? (<CircleLoader />) : "Confirm Payment"}
+          <button onClick={checkout} className="px-7 py-4 bg-red-500 hover:bg-red-600 text-white rounded-2xl shadow-sm" disabled={loadCheckout}>
+            {loadCheckout ? (<DotLoader size={20} />) : "Konfirmasi Pembayaran"}
           </button>
         </div>
       </div>

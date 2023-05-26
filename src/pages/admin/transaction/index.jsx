@@ -70,19 +70,7 @@ const index = () => {
           {/* Section Filtering */}
           <div className="border-[1px] rounded-xl px-5 py-7 my-3">
             <div className="flex flex-row pb-3 items-center gap-3">
-              {/* <h1 className="font-semibold text-lg">Sort By :</h1>
-              <div>
-                <select
-                  id="small"
-                  className="w-32 h-[36px] flex py-1 text-[#53514D] border font-medium border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option value="order">ORDER ID</option>
-                  <option value="date">DATE</option>
-                  <option value="status">STATUS</option>
-                  <option value="shipping">SHIPPING</option>
-                </select>
-              </div> */}
-              <div className="flex justify-between">
+              <div className="flex justify-between w-full">
                 <p>Lihat pesanan anda tertera di bawah ini</p>
                 <div className="w-[30%] flex flex-col gap-5">
                   <div>
@@ -149,19 +137,19 @@ const index = () => {
                       ORDER ID
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      ORDER CREATED
+                      ORDER DIBUAT
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      NAME
+                      NAMA CUSTOMER
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      AMOUNT
+                      JUMLAH
                     </th>
                     <th scope="col" className="px-6 py-3">
                       STATUS
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      ACTION
+                      DETAIL
                     </th>
                   </tr>
                 </thead>

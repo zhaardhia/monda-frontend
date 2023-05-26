@@ -14,6 +14,7 @@ const LoginAdmin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msgError, setMsgError] = useState(null);
+  const [visiblePass, setVisiblePass] = useState(false)
 
   const submitUser = async () => {
     console.log("tes");
@@ -74,13 +75,26 @@ const LoginAdmin = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <input
-                  type="text"
-                  placeholder="Kata Sandi"
-                  className="sm:w-[20rem] w-[95%] rounded-2xl bg-[#C8C6C6] text-[#666666] font-semibold sm:text-base text-sm"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                
+                <div className="flex flex-col gap-2">
+                  <input
+                    type={visiblePass ? "text" : "password"}
+                    placeholder="Kata Sandi"
+                    className="sm:w-[20rem] w-[95%] rounded-2xl bg-[#C8C6C6] text-[#666666] font-semibold sm:text-base text-sm"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <div className="flex gap-3 items-center">
+                    <input
+                      type="checkbox"
+                      className="focus:border-0"
+                      checked={visiblePass}
+                      onChange={(e) => setVisiblePass(e.target.checked)}
+                    />
+                    <p className="text-slate-100 text-sm">Buka Password</p>
+                  </div>
+
+                </div>
               </div>
               <motion.div
                 className={`border-2 border-red-500 rounded-xl p-2 ${msgError ? "block" : "hidden"}`}

@@ -38,7 +38,7 @@ const MyOrderDetail = () => {
         <div className="my-10 flex flex-col gap-3">
           <div className="flex gap-3 items-center ">
             <Icon icon="mdi:credit-card-fast-outline" width={40} className="text-[#A88653]" />
-            <span className="text-slate-800 text-2xl">Your Order</span>
+            <span className="text-slate-800 text-2xl">Pesanan Anda</span>
           </div>
           <div className="flex justify-between">
             <p>Lihat pesanan anda tertera di bawah ini</p>

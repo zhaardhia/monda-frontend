@@ -12,8 +12,12 @@ const RecapShopping = ({ data, deliveryFee }) => {
         <p className="font-semibold sm:text-xl text-md">{rupiah(deliveryFee)}</p>
       </div>
       <div className="flex justify-between w-full items-center">
+        <p className="font-light text-lg">fee admin</p>
+        <p className="font-semibold sm:text-xl text-md">{rupiah(4000)}</p>
+      </div>
+      <div className="flex justify-between w-full items-center">
         <p className="font-light text-lg">total</p>
-        <p className="font-semibold sm:text-xl text-md">{rupiah(data?.total_amount + (deliveryFee ?? 0))}</p>
+        <p className="font-semibold sm:text-xl text-md">{rupiah(data?.total_amount + (deliveryFee ?? 0) + 4000)}</p>
       </div>
     </div>
   )

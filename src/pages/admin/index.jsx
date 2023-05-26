@@ -117,7 +117,7 @@ const AdminIndex = () => {
     <LayoutAdmin>
       <div className="w-full pr-2">
         <div className="my-7">
-          <h1 className="text-xl font-bold mb-6">Welcome Back, Admin!</h1>
+          <h1 className="text-xl font-bold mb-6">Selamat Datang Kembali, Admin!</h1>
           <div className="border border-slate-200 p-4 rounded-xl">
             <div className="flex items-end">
               <h1 className="font-semibold text-2xl mr-1">Sales</h1>
@@ -192,7 +192,7 @@ const AdminIndex = () => {
           {/* Table Transaction Section */}
           <div className="p-3 border border-slate-300 rounded-xl">
             <div className="flex items-center">
-              <h1 className="font-semibold text-2xl mr-2">Transactions</h1>
+              <h1 className="font-semibold text-2xl mr-2">Transaksi</h1>
               <Icon icon="grommet-icons:transaction" width={23} color="#A96464" />
             </div>
             <span className="text-[#71717A] font-normal">Berikut list dari transaksi terakhir</span>
@@ -202,13 +202,13 @@ const AdminIndex = () => {
                 <thead className="border-b-2 border-[#E5E7EB] text-sm text-[#6B7280] uppercase bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
-                      TRANSACTION
+                      TRANSAKSI
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      DATE & TIME
+                      TANGGAL & JAM
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      AMOUNT
+                      JUMLAH
                     </th>
                     <th scope="col" className="px-6 py-3 w-40">
                       STATUS
@@ -222,15 +222,16 @@ const AdminIndex = () => {
                     </div>
                   )}
                   {!loadTrx && latestTransaction?.map((data) => {
+                    console.log({data})
                     return (
                       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th className="px-6 py-4 text-base text-gray-900 whitespace-nowrap dark:text-white">
                           <h1 className="font-normal">
-                            Payment from <span className="font-bold">{data["user.fullname"]}</span>
+                            Order dari <span className="font-bold">{data["user.fullname"]}</span>
                           </h1>
                         </th>
-                        <td className="px-6 py-4 text-base">{moment(data.updated_date).format("LL")}</td>
-                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(data.gross_amount)}</td>
+                        <td className="px-6 py-4 text-base">{moment(data.updated_date).format("LLL")}</td>
+                        <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(+data.gross_amount + +data.transfer_fee + +data.delivery_fee)}</td>
                         <td className="px-6 py-4">
                           <h1 className={`px-3 py-1 ${checkStatusOrderTextColor(data.status_order)} rounded-[10px] ${checkStatusOrderBgColor(data.status_order)} w-24 text-center`}>{checkStatusOrder(data.status_order)}</h1>
                         </td>

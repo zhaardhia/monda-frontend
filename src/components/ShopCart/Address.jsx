@@ -23,7 +23,7 @@ const Address = ({ id, delivery_location, setCartData, cartData, city_shopping, 
     { value: 'Tangerang Selatan', label: 'Tangerang Selatan' },
     { value: 'Bekasi', label: 'Bekasi' },
   ]
-
+  console.log({city_shopping})
   useEffect(() => {
     getUserAddress()
   }, [state?.userInfo?.userId])
@@ -82,7 +82,8 @@ const Address = ({ id, delivery_location, setCartData, cartData, city_shopping, 
     setCity(userInfo.city)
     setSelectedCity({ value: userInfo.city, label: userInfo.city })
   }
-
+  console.log(address, city, postalCode)
+  console.log(cartData?.delivery_location === address && cartData?.city === city && cartData?.postal_code === postalCode)
   return (
     <div className="flex flex-col items-center p-10 rounded-2xl lg:w-[60rem] md:w-[40rem] w-[100%] shadow-xl mx-auto bg-slate-50 gap-5">
       <div className="flex justify-between w-[100%] sm:flex-row flex-col sm:gap-0 gap-5">
@@ -95,12 +96,12 @@ const Address = ({ id, delivery_location, setCartData, cartData, city_shopping, 
           >Gunakan Alamat Pribadi</button>
         )}
       </div>
-      <textarea name="" id="" cols="30" value={address} defaultValue={delivery_location} onChange={(e) => setAddress(e.target.value)} rows="10" placeholder="Fill your address here" className="w-[100%] md:h-[10rem] h-[15rem] focus:border-none rounded-2xl shadow-xl border-none"></textarea>
+      <textarea name="" id="" cols="30" value={address} defaultValue={delivery_location} onChange={(e) => setAddress(e.target.value)} rows="10" placeholder="Isi alamatmu di kolom ini" className="w-[100%] md:h-[10rem] h-[15rem] focus:border-none rounded-2xl shadow-xl border-none" disabled={!id}></textarea>
       <div className="flex justify-between w-[100%] md:flex-row flex-col md:gap-0 gap-5">
         <Select
           className="basic-single sm:w-[50%] w-full"
           classNamePrefix="select"
-          defaultValue={{value: city_shopping, label: city_shopping}}
+          defaultValue={ city_shopping ? {value: city_shopping, label: city_shopping} : null}
           // isLoading={isLoading}
           value={selectedCity}
           isClearable={true}
@@ -113,8 +114,9 @@ const Address = ({ id, delivery_location, setCartData, cartData, city_shopping, 
             setCity(e?.value)
             setSelectedCity(e)
           }}
+          disabled={!id}
         />
-        <input type="text" placeholder="Masukkan Kode Pos" defaultValue={postal_code} value={postalCode} className="rounded-xl border-none" onChange={(e) => setPostalCode(e.target.value)} />
+        <input type="text" placeholder="Masukkan Kode Pos" defaultValue={postal_code} value={postalCode} className="rounded-xl border-none" onChange={(e) => setPostalCode(e.target.value)} disabled={!id} />
       </div>
       <motion.div className={`border-2 border-red-500 rounded-md p-2 ${errorMsg ? "block" : "hidden"} w-[70%] mx-auto mt-10`}
         initial={"offscreen"}
@@ -131,6 +133,9 @@ const Address = ({ id, delivery_location, setCartData, cartData, city_shopping, 
             onClick={() => onSubmitAddress()}
           >Save</button>
         </div>
+      )}
+      {!id && (
+        <h1>Pilih produk terlebih dahulu sebelum mengubah alamat pengiriman</h1>
       )}
     </div>
   )

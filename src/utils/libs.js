@@ -1,11 +1,11 @@
 export function checkStatusOrder(status_order) {
-  if (status_order === "not_paid") return "Not Paid"
-  else if (status_order === "expire_payment") return "Expire"
-  else if (status_order === "paid_unverified") return "Paid Unverified"
-  else if (status_order === "paid_verified") return "Paid Verified"
-  else if (status_order === "shipment") return "Shipment"
-  else if (status_order === "completed") return "Completed"
-  else if (status_order === "cancel_payment") return "Canceled"
+  if (status_order === "not_paid") return "Belum Dibayar"
+  else if (status_order === "expire_payment") return "Expired (Kadaluarsa)"
+  else if (status_order === "paid_unverified") return "Terbayar, Belum Diverifikasi"
+  else if (status_order === "paid_verified") return "Terbayar, Sudah Diverifikasi"
+  else if (status_order === "shipment") return "Sedang Dikirim"
+  else if (status_order === "completed") return "Selesai"
+  else if (status_order === "cancel_payment") return "Dibatalkan"
 
   else return "?"
 }

@@ -88,7 +88,7 @@ const Delivery = ({ id, courier_id, setDeliveryFee, setCartData, cartData }) => 
   console.log("kurir", {selectedCourier})
   return (
     <div className="flex justify-between md:flex-row flex-col md:gap-0 gap-5 md:items-center p-10 rounded-2xl lg:w-[60rem] md:w-[40rem] w-[100%] shadow-xl mx-auto bg-slate-50">
-      <h1 className="text-xl">Delivery Courier</h1>
+      <h1 className="text-xl">Kurir Delivery</h1>
       <div className="flex gap-5 md:justify-end items-center md:w-[40%]">
         {/* <p className="font-light">Pilih Kurir: </p> */}
         {loadSelect && (<p>loading...</p>)}
@@ -100,7 +100,7 @@ const Delivery = ({ id, courier_id, setDeliveryFee, setCartData, cartData }) => 
             // defaultValue={{ value: 2, label: "SICEPATT" }}
             // value={selectedCourier}
             // isLoading={isLoading}
-            placeholder="Select Courier"
+            placeholder="Pilih Kurir"
             isClearable={true}
             // isSearchable={true}
             name="courier"

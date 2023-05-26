@@ -26,8 +26,8 @@ const BannerWelcome = () => {
           transition={{staggerChildren:0.5}}
           variants={animateFromLeft}
         >
-          <h1 className="md:text-6xl text-4xl text-[#53514D]">Happy Shopping,<br /><span className="text-[#A88653]">Monders!</span></h1>
-          <h3 className="md:text-2xl text-xl text-[#53514D]">See our catalogue below</h3>
+          <h1 className="md:text-6xl text-4xl text-[#53514D]">Selamat Berbelanja,<br /><span className="text-[#A88653]">Monders!</span></h1>
+          <h3 className="md:text-2xl text-xl text-[#53514D]">Cek katalog kita di bawah ya!</h3>
           
         </motion.div>
       </div>
