@@ -49,7 +49,7 @@ const SidebarAdmin = () => {
             </svg>
           </button>
           <Link href="/admin" className="mt-10">
-            <Image src="/monda_logo.png" alt="Monda Logo" width={100} height={100} />
+            <Image src="/monda-logo-black.png" alt="Monda Logo" width={100} height={100} />
           </Link>
           <ul className="space-y-3 font-medium">
             <li>

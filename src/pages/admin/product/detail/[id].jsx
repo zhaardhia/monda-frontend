@@ -24,6 +24,8 @@ const ProductDetail = () => {
   const [msgError, setMsgError] = useState(false)
   const [msgSuccess, setMsgSuccess] = useState(false)
 
+  const [modalDelete, setModalDelete] = useState(false)
+
   useEffect(() => {
     getProductDetail()
   }, [router?.query?.id])
@@ -99,6 +101,46 @@ const ProductDetail = () => {
 
         setTimeout(() => {
           window.location.reload()
+        }, 5000)
+      } catch (error) {
+        console.error(error)
+        setMsgError(error.response.data.message)
+        setMsgSuccess(false)
+        setTimeout(() => {
+          setMsgError(false)
+        }, 5000)
+      }
+    }
+  }
+
+  const softDeleteProduct = async () => {
+    if (!router.query.id) {
+      setMsgError("Produk ID Tidak Terdeteksi")
+      setTimeout(() => {
+        setMsgError(false)
+      }, 5000)
+    } else {
+      setMsgError(false)
+
+      try {
+        await axiosJWTAdmin( 
+          {
+            method: "put",
+            url: `${process.env.NEXT_PUBLIC_BASE_URL}/v1/product/soft-delete-product`,
+            withCredentials: true,
+            headers: {
+              Authorization: `Bearer ${state?.token}`,
+            },
+            data: {
+              product_id: router.query.id
+            }
+          }    
+        )
+        setMsgError(false)
+        setMsgSuccess("Sukses menghapus produk dari katalog.")
+
+        setTimeout(() => {
+          window.location = `${process.env.NEXT_PUBLIC_BASE_THIS_WEB}admin/product`
         }, 5000)
       } catch (error) {
         console.error(error)
@@ -265,17 +307,49 @@ const ProductDetail = () => {
                     </>
                   ) :
                   (
-                    <button className="px-5 py-2 w-64 rounded-[15px] bg-[#DE5959] text-white hover:shadow-lg"
-                      onClick={() => setOnEdit(true)}
-                    >
-                      Update Product
-                    </button>
+                    <>
+                      <button className="px-5 py-2 w-64 rounded-[15px] bg-[#DE5959] text-white hover:shadow-lg"
+                        onClick={() => o}
+                      >
+                        Delete Product
+                      </button>
+                      <button className="px-5 py-2 w-64 rounded-[15px] border-[1px] border-[#DE5959] text-[#DE5959] hover:shadow-lg"
+                        onClick={() => setOnEdit(true)}
+                      >
+                        Update Product
+                      </button>
+                    </>
                   )}
                 
                 </div>
               </div>
             </div>
           </div>
+          {modalDelete && (
+            <>
+              <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto w-fit">
+                  <div className="border-0 rounded-lg shadow-lg relative bg-white flex flex-col outline-none focus:outline-none h-fit p-5 md:w-[40rem] w-[80%] mx-auto">
+                    <div className="place-self-end">
+                      <button
+                        onClick={() => setModalDelete(false)}
+                        className="p-1 bg-red-500 hover:bg-red-600 rounded-lg"
+                      >
+                        <Icon width={20} icon="basil:cross-outline" className="text-white" />
+                      </button>
+                    </div>
+                    <div className="my-10 flex flex-col items-center gap-10">
+                      <h1 className="sm:text-2xl text-xl text-center">Apakah anda yakin untuk menghapus produk ini?</h1>
+                      <button className="py-2 px-5 bg-red-500 rounded-xl shadow-xl text-white"
+                        onClick={() => softDeleteProduct()}
+                      >Hapus Produk Ini</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+            </>
+          )}
         </div>
       )}
       

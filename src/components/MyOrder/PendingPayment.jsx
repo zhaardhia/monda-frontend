@@ -6,6 +6,8 @@ import { useSessionUser } from '../../contexts/SessionUserContext'
 import { motion } from "framer-motion";
 import { animateVibrate, animateFromAboveSlower } from "../../animations/animationFade";
 import { useRouter } from 'next/router'
+import { formatToLocaleString, formatInTimeZone } from 'date-fns-tz';
+
 const PendingPayment = ({ data }) => {
   const router = useRouter()
   const { axiosJWT, state } = useSessionUser()
@@ -52,7 +54,10 @@ const PendingPayment = ({ data }) => {
       <div className="flex flex-col gap-3">
         <p className="font-light">No. Rekening Virtual Account:</p>
         <p className="sm:text-3xl text-xl font-semibold">{data?.va_number}</p>
-        <p className="text-gray-400">Jatuh tempo pada {moment(data?.expiry_time).format("LLL")}</p>
+        {/* <p className="text-gray-400">Jatuh tempo pada {moment(data?.expiry_time).format("YYYY-MM-DD H:mm:ss")}</p> */}
+        {/* <p className="text-gray-400">Jatuh tempo pada {formatInTimeZone(new Date(data?.expiry_time), 'Asia/Jakarta', 'cccc, MMMM d, yyyy p')}</p> */}
+        {/* <p className="text-gray-400">Jatuh tempo pada {new Date(data?.expiry_time).getHours()}</p> */}
+        <p className="text-gray-400">Jatuh tempo pada {data?.expiry_time}</p>
         <div className="sm:w-[25rem] w-[90%]">
           <p>Bayar pesanan ke Virtual Account di atas sebelum membuat pesanan kembali dengan Virtual Account agar nomor tetap sama. Harap bayar pesanan sebelum jatuh tempo pada waktu yang tertera</p>
         </div>
@@ -99,7 +104,7 @@ const PendingPayment = ({ data }) => {
                 /> */}
                 <div className="my-10 flex flex-col items-center gap-10">
                   <h1 className="text-2xl">Apakah anda yakin untuk membatalkan pesanan ini?</h1>
-                  <button onClick={() => cancelPayment()} className="py-2 px-5 bg-red-500 rounded-xl shadow-xl text-white">Ya, saya ingin konfirmasi pesanan ini</button>
+                  <button onClick={() => cancelPayment()} className="py-2 px-5 bg-red-500 rounded-xl shadow-xl text-white">Ya, saya ingin membatalkan pesanan ini</button>
                 </div>
               </div>
             </div>

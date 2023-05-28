@@ -3,10 +3,11 @@ import { Transition } from "@headlessui/react";
 import Link from 'next/link'
 import Image from 'next/image'
 import { useSessionUser } from '../contexts/SessionUserContext'
-
+import { useRouter } from 'next/router'
 function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const { axiosJWT, refreshToken, dispatch, state } = useSessionUser()
+  const router = useRouter()
 
   return (
     <div>
@@ -16,25 +17,24 @@ function Nav() {
             <div className="flex justify-between items-center">
               <Link href="/">
                 <Image
-                  src="/monda_logo.png"
+                  src="/monda-logo-black.png"
                   alt="Monda Logo"
                   width={70}
                   height={70}
                 />
               </Link>
               <div className="hidden md:flex gap-10 md:mx-10">
-                <Link href="#home-section" scroll={false}
+                <Link href="/" scroll={false}
                   className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >Home</Link>
-                <Link href="#about-us" 
-                  className="text-[#A88653] hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
-                >About Us</Link>
+                {router.pathname === "/" && (
+                  <Link href="#about-us" 
+                    className="text-[#A88653] hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
+                  >About Us</Link>
+                )}
                 <Link href="/shop"
                   className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
                 >Shop</Link>
-                <Link href="/"
-                  className="text-[#A88653] hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
-                >Contact Us</Link>
                 {state.isLoggedIn && (
                   <Link href={`/profile/${state.userInfo.userId}`} 
                     className="text-black hover:bg-gray-700 hover:text-white p-2 rounded-md text-sm font-medium"
@@ -114,15 +114,14 @@ function Nav() {
                 <Link href="#home-section"
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Home</Link>
-                <Link href="#about-us" 
-                  className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >About Us</Link>
+                {router.pathname === "/" && (
+                  <Link href="#about-us" 
+                    className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >About Us</Link>
+                )}
                 <Link href="/shop"
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Shop</Link>
-                <Link href="/"
-                  className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >Contact Us</Link>
                 <Link href="/register" 
                   className="text-black hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >Daftar</Link>

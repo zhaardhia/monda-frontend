@@ -18,14 +18,14 @@ const WhyUs = () => {
       }}
     >
       <h2 className="text-4xl text-center">Why Us?</h2>
-      <div className="flex justify-center md:flex-row flex-col md:mx-0 mx-auto lg:gap-14 sm:gap-10 my-28">
+      <div className="flex justify-center md:flex-row flex-col md:mx-0 mx-auto lg:gap-14 sm:gap-10 gap-7 my-28">
         <motion.div 
           className="lg:w-[20rem] md:w-[15rem] w-[80%] md:mx-0 mx-auto flex flex-col gap-5"
           initial={"offscreen"}
           whileInView={"onscreen"}
           viewport={{once:true}}
           transition={{staggerChildren:0.5}}
-          variants={animateFromLeft}
+          variants={animateOpacity}
         >
           <Image
             src="/star.png"
@@ -65,7 +65,7 @@ const WhyUs = () => {
           whileInView={"onscreen"}
           viewport={{once:true}}
           transition={{staggerChildren:0.5}}
-          variants={animateFromRight}
+          variants={animateOpacity}
         >
           <Image
             src="/fast-deliv.png"

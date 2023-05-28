@@ -57,8 +57,17 @@ const OrderCard = ({ data, setData }) => {
 
       {data?.status_order === "shipment" && (
         <div className="mt-5">
-          <h1 className="text-xl font-light">Order Date: <strong>{moment(data?.created_date).format("LLL")}</strong></h1>
-          <h1 className="text-xl font-light">Delivery To: <strong>{data?.address}</strong></h1>
+          <h1 className="text-xl font-light">Dipesan Tanggal: <strong>{moment(data?.created_date).format("LLL")}</strong></h1>
+          <h1 className="text-xl font-light">Dikirim Tanggal: <strong>{moment(data?.updated_date).format("LLL")}</strong></h1>
+          <h1 className="text-xl font-light">Pengiriman ke: <strong>{data?.address}</strong></h1>
+        </div>
+      )}
+
+      {data?.status_order === "completed" && (
+        <div className="mt-5">
+          <h1 className="text-xl font-light">Dipesan Tanggal: <strong>{moment(data?.created_date).format("LLL")}</strong></h1>
+          <h1 className="text-xl font-light">Sampai Tanggal: <strong>{moment(data?.updated_date).format("LLL")}</strong></h1>
+          <h1 className="text-xl font-light">Pengiriman ke: <strong>{data?.address}</strong></h1>
         </div>
       )}
       

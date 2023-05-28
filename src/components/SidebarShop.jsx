@@ -45,6 +45,11 @@ const SidebarShop = () => {
                 <Icon icon="mingcute:shopping-bag-1-fill" width={30} className="text-slate-100" />
               </Link>
             </li>
+            <li className={`${router.pathname.includes("/belanja-bulanan") && "bg-[#A88653] rounded-lg"}`}>
+              <Link href="/belanja-bulanan" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-gray-700">
+                <Icon icon="solar:cart-linear" width={30} className="text-slate-100" />
+              </Link>
+            </li>
             <li className={`${router.pathname.includes("/shop/shopping-cart") && "bg-[#A88653] rounded-lg"}`}>
               <Link href="/shop/shopping-cart" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-slate-600 dark:hover:bg-gray-700">
                 <Icon icon="material-symbols:shopping-cart-outline" width={30} className="text-slate-100" />

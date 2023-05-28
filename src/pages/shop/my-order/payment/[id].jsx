@@ -34,7 +34,7 @@ const Payment = () => {
       // setMsgError(error.response.data.message)
     } 
   }
-  console.log(paymentData)
+  console.log({paymentData})
   return (
     <LayoutShop>
       <div className="w-[90%] md:mx-0 mx-auto">

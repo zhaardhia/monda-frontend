@@ -10,12 +10,6 @@ const CatalogueContainer = ({ products }) => {
           <CatalogueCard data={data} />
         )
       })}
-      {/* <CatalogueCard />
-      <CatalogueCard />
-      <CatalogueCard />
-      <CatalogueCard />
-      <CatalogueCard />
-      <CatalogueCard /> */}
     </div>
   )
 }

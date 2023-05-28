@@ -14,22 +14,25 @@ const index = () => {
   const router = useRouter();
 
   const chooseOrderStatus = [
-    { value: "", label: 'All' },
-    { value: "completed", label: 'Completed' },
-    { value: "shipment", label: 'Shipment' },
-    { value: "paid_verified", label: 'Paid Verified' },
-    { value: "paid_unverified", label: 'Paid Unverified' },
-    { value: "not_paid", label: 'Not Paid' },
+    { value: "", label: 'Semua' },
+    { value: "completed", label: 'Selesai' },
+    { value: "shipment", label: 'Sedang Dikirim' },
+    { value: "paid_verified", label: 'Terbayar, Sudah Diverifikasi' },
+    { value: "paid_unverified", label: 'Terbayar, Belum Diverifikasi' },
+    { value: "not_paid", label: 'Belum Dibayar' },
   ]
 
   const chooseOrderByType = [
-    { value: ["created_date", "ASC"], label: 'Tanggal dibuat transaksi (dari terbaru hingga terbaru)' },
-    { value: ["created_date", "DESC"], label: 'Tanggal dibuat transaksi (dari terlama hingga terlama)' },
+    { value: ["created_date", "ASC"], label: 'Tanggal dibuat transaksi (dari terlama hingga terbaru)' },
+    { value: ["created_date", "DESC"], label: 'Tanggal dibuat transaksi (dari terbaru hingga terlama)' },
     { value: ["status_order", "ASC"], label: 'Status dari abjad awal hingga akhir' },
     { value: ["status_order", "DESC"], label: 'Status dari abjad akhir hingga awal' },
   ]
 
   const [orders, setOrders] = useState()
+  const [ordersFilteredList, setOrdersFilteredList] = useState([])
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [load, setLoad] = useState(false)
   const [orderBy, setOrderBy] = useState(chooseOrderByType[1].value[0])
   const [orderBySort, setOrderBySort] = useState(chooseOrderByType[1].value[1])
@@ -52,12 +55,41 @@ const index = () => {
       })
       console.log(response.data)
       setOrders(response.data.data)
+      setOrdersFilteredList(
+        response.data.data.filter((e, i) => {
+          return i < 10
+        })
+      )
+      setTotalPage(Math.ceil(response.data.data.length / 10))
+      setPage(1)
       setLoad(false)
     } catch (error) {
       console.error(error)
       setLoad(false)
     }
   }
+
+  const nextPage = () => {
+    if (page < totalPage) {
+      setPage(page + 1);
+      setOrdersFilteredList(
+        orders.filter((e, i) => {
+          return i >= page * 10 && i < (page + 1) * 10
+        })
+      )
+    }
+  };
+
+  const prevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      setOrdersFilteredList(
+        orders.filter((e, i) => {
+          return i >= (page - 2) * 10 && i < (page - 1) * 10
+        })
+      )
+    }
+  };
 
   return (
     <LayoutAdmin>
@@ -154,13 +186,13 @@ const index = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders?.map((data) => {
+                  {ordersFilteredList?.map((data) => {
                     return (
                       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
                           00{data?.id}
                         </th>
-                        <td className="px-6 py-4 text-base">{moment(data?.created_date).format("LL")}</td>
+                        <td className="px-6 py-4 text-base">{moment(data?.created_date).format("LLL")}</td>
                         <td className="px-6 py-4 font-medium text-gray-900 text-base">{data?.["user.fullname"]}</td>
                         <td className="px-6 py-4 font-medium text-gray-900 text-base">{rupiah(data?.gross_amount)}</td>
                         <td className="px-6 py-4">
@@ -178,7 +210,15 @@ const index = () => {
                 </tbody>
               </table>
             )}
-            
+            <div className="flex justify-between my-10 items-center">
+              <button onClick={prevPage} disabled={page < 2} className="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg shadow-lg disabled:opacity-25">
+                <Icon icon="grommet-icons:previous" />
+              </button>
+              <p>Page: <span className="underline">{page} / {totalPage}</span></p>
+              <button onClick={nextPage} disabled={totalPage === page} className="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg shadow-lg disabled:opacity-25">
+                <Icon icon="grommet-icons:next" />
+              </button>
+            </div>
           </div>
         </div>
       </div>

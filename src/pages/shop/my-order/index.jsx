@@ -8,6 +8,9 @@ import { useSessionUser } from '../../../contexts/SessionUserContext'
 import moment from 'moment'
 import { checkStatusOrder, rupiah, checkStatusOrderBgColor, checkStatusOrderTextColor } from "../../../utils/libs"
 import { BarLoader } from "react-spinners";
+import { Table, Pagination } from 'rsuite';
+const { Column, HeaderCell, Cell } = Table;
+// import 'rsuite-table/lib/less/index.less'; // or 'rsuite-table/dist/css/rsuite-table.css'
 
 const MyOrder = () => {
   const chooseOrderStatus = [
@@ -20,8 +23,8 @@ const MyOrder = () => {
   ]
 
   const chooseOrderByType = [
-    { value: ["order_no", "ASC"], label: 'Order Number (dari terbaru hingga terbaru)' },
-    { value: ["order_no", "DESC"], label: 'Order Number (dari terlama hingga terlama)' },
+    { value: ["order_no", "ASC"], label: 'Order Number (dari terlama hingga terbaru)' },
+    { value: ["order_no", "DESC"], label: 'Order Number (dari terbaru hingga terlama)' },
     { value: ["status_order", "ASC"], label: 'Status dari abjad awal hingga akhir' },
     { value: ["status_order", "DESC"], label: 'Status dari abjad akhir hingga awal' },
   ]
@@ -29,6 +32,9 @@ const MyOrder = () => {
   const { axiosJWT, refreshToken, state, dispatch } = useSessionUser()
   const [isLoading, setIsLoading] = useState(true)
   const [orderList, setOrderList] = useState([])
+  const [orderFilteredList, setOrderFilteredList] = useState([])
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const [orderBy, setOrderBy] = useState(chooseOrderByType[1].value[0])
   const [orderBySort, setOrderBySort] = useState(chooseOrderByType[1].value[1])
   const [orderType, setOrderType] = useState(chooseOrderStatus[0].value)
@@ -46,7 +52,14 @@ const MyOrder = () => {
         headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
       })
       console.log(response, response.data.data)
-      setOrderList(response.data.data)     
+      setOrderList(response.data.data)
+      setOrderFilteredList(
+        response.data.data.filter((e, i) => {
+          return i < 10
+        })
+      )
+      setTotalPage(Math.ceil(response.data.data.length / 10))
+      setPage(1)
       setIsLoading(false)  
       // createTable();
     } catch (error) {
@@ -55,6 +68,36 @@ const MyOrder = () => {
     }
   };
 
+  // const [limit, setLimit] = React.useState(10);
+
+  const handleChangeLimit = dataKey => {
+    setPage(1);
+    setLimit(dataKey);
+  };
+
+  const nextPage = () => {
+    if (page < totalPage) {
+      setPage(page + 1);
+      setOrderFilteredList(
+        orderList.filter((e, i) => {
+          return i >= page * 10 && i < (page + 1) * 10
+        })
+      )
+    }
+  };
+
+  const prevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+      setOrderFilteredList(
+        orderList.filter((e, i) => {
+          return i >= (page - 2) * 10 && i < (page - 1) * 10
+        })
+      )
+    }
+  };
+
+  console.log({orderList}, {orderFilteredList})
   return (
     <LayoutShop>
       <div className="w-[90%]">
@@ -110,61 +153,9 @@ const MyOrder = () => {
           )
         }
 
-        {!isLoading && (
-          <div className='relative flex flex-col table-background'>
+        {!isLoading && orderList?.length > 0 && (
+          <div className='flex flex-col table-background'>
             <div className='block w-full'>
-              {/* <table id='table'>
-                <thead>
-                  <tr>
-                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
-                      No
-                    </th>
-                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
-                      Order ID
-                    </th>
-                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
-                      Date & Time
-                    </th>
-                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2 w-full'>
-                      Amount
-                    </th>
-                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
-                      Status
-                    </th>
-                    <th className='text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2'>
-                      Action
-                    </th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  {orderList?.map((item, index) => {
-                    console.log(item)
-                    return (
-                      <tr key={index}>
-                        <td className='text-xs font-weight-bold text-center'>
-                          {index + 1}
-                        </td>
-                        <td className='text-xs font-weight-bold text-center cursor-pointer hover:text-blue-600'>
-                          {item.id}
-                        </td>
-                        <td className='text-xs font-weight-bold'>
-                          {moment(item.updated_date).format("LLL")}
-                        </td>
-                        <td className='text-xs font-weight-bold color-blue'>
-                          {rupiah(item.gross_amount)}
-                        </td>
-                        <td className='text-xs font-weight-bold'>
-                          {checkStatusOrder(item.status_order)}
-                        </td>
-                        <td className='text-xs font-weight-bold'>
-                          <Link href={`/shop/my-order/detail/${item.id}`}>Lihat Detail Pesanan</Link>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table> */}
               <table className="w-full text-sm mt-3 text-left text-gray-500 dark:text-gray-400">
                 <thead className="border-b-2 border-[#E5E7EB] text-sm text-[#6B7280] uppercase bg-[#F9FAFB] dark:bg-gray-700 dark:text-gray-400">
                   <tr>
@@ -186,7 +177,7 @@ const MyOrder = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orderList?.map((item, index) => {
+                  {orderFilteredList?.map((item, index) => {
                     return (
                       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <td scope="row" className="px-6 py-4 font-medium text-base text-gray-900 whitespace-nowrap dark:text-white">
@@ -205,6 +196,15 @@ const MyOrder = () => {
                   })}
                 </tbody>
               </table>
+              <div className="flex justify-between my-10 items-center">
+                <button onClick={prevPage} disabled={page < 2} className="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg shadow-lg disabled:opacity-25">
+                  <Icon icon="grommet-icons:previous" />
+                </button>
+                <p>Page: <span className="underline">{page} / {totalPage}</span></p>
+                <button onClick={nextPage} disabled={totalPage === page} className="p-3 bg-slate-50 hover:bg-slate-100 rounded-lg shadow-lg disabled:opacity-25">
+                  <Icon icon="grommet-icons:next" />
+                </button>
+              </div>              
             </div>
           </div>
         )}

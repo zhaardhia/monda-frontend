@@ -148,8 +148,9 @@ const AdminIndex = () => {
                 )}
                 {!loadUser && latestUser?.map((data) => {
                   return (
-                    <div className="flex px-2 border-b-2 pb-2 my-3 ">
+                    <div className="flex px-2 border-b-2 pb-2 my-3 items-center">
                       {/* <img src="ikanroa_aboutus.png" alt="" className="w-14" /> */}
+                      <Icon icon="gg:profile" width={40} className="text-slate-700" />
                       <div className="flex justify-between w-full">
                         <div className="mr-10 ms-3">
                           <h1 className="font-bold text-lg">{data.fullname}</h1>

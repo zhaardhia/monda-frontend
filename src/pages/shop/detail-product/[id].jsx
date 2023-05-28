@@ -11,6 +11,7 @@ import { useSessionUser } from '../../../contexts/SessionUserContext'
 import { BarLoader } from "react-spinners";
 import Link from 'next/link'
 import { rupiah } from '../../../utils/libs'
+import BelanjaBulananButton from '@/components/BelanjaBulananButton'
 
 const ShopIndex = () => {
   const router = useRouter()
@@ -138,6 +139,7 @@ const ShopIndex = () => {
                       <Icon icon="material-symbols:shopping-cart-outline-rounded" width={20} />
                     </div>
                   </div>
+                  <BelanjaBulananButton product_id={id}/>
                 </div>
                 
               </div>

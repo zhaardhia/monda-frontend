@@ -44,7 +44,7 @@ const Checkout = () => {
         console.log({response})
         setMsgError(false)
         setLoadCheckout(false)
-        router.push(`/shop/my-order/payment/${response.data.data.order_id}`)
+        window.location =`${process.env.NEXT_PUBLIC_BASE_THIS_WEB}shop/my-order/payment/${response.data.data.order_id}`
       } catch (error) {
         console.error(error)
         setMsgError(error.response.data.message)
