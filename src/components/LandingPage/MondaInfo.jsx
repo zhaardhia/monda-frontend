@@ -26,7 +26,7 @@ const MondaInfo = () => {
       <div className="my-28">
         <div className="flex justify-center sm:flex-row flex-col md:gap-20 gap-10 items-center">
           <img src="/kentang.png" alt="" className="md:w-[15rem] w-[10rem]" />
-          <img src="/sambel-roa.png" alt="" className="md:w-[15rem] w-[10rem]" />
+          <img src="/_sambel-roa.png" alt="" className="md:w-[15rem] w-[10rem]" />
           <img src="/kebab.png" alt="" className="md:w-[15rem] w-[10rem]" />
         </div>
         <div className="w-[50%] mx-auto my-10">

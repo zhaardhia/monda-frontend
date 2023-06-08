@@ -76,7 +76,7 @@ const Login = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full items-center">
                   <input
                     type={visiblePass ? "text" : "password"}
                     placeholder="Kata Sandi"
@@ -84,7 +84,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <div className="flex gap-3 items-center">
+                  <div className="flex gap-3 items-center sm:w-full w-[95%] justify-start">
                     <input
                       type="checkbox"
                       className="focus:border-0"

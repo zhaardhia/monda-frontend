@@ -77,7 +77,11 @@ const OrderCard = ({ data, setData }) => {
             <>
               <div className="flex justify-between sm:flex-row flex-col sm:items-center sm:gap-0 gap-3">
                 <div className="flex gap-3 items-center">
-                  <img src="/sambel-roa.png" alt="" className="md:w-[8rem] w-[5rem]" />
+                  {e?.["product.image"] ? (
+                    <img src={`${process.env.NEXT_PUBLIC_BASE_WEB}${e?.["product.image"]}`} alt="" className="md:w-[18rem] w-[5rem] h-[70%] object-cover" />
+                  ) : (
+                    <img src={`/sambel-roa.png`} alt="" className="md:w-[18rem] w-[5rem] object-cover" />
+                  )}
                   <h1 className="text-lg font-semibold">{e?.["product.name"]}</h1>
                 </div>
                 <div>
