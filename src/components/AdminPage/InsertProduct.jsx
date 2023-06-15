@@ -18,7 +18,7 @@ const InsertProduct = () => {
   const submitProduct = async () => {
     console.log({name}, {price}, {stock}, {description}, {image})
 
-    if (!name || !price || !stock || !description || !image) {
+    if (!name || !price || isNaN(stock) || !description || !image) {
       setMsgError("Informasi produk harus diisi dengan lengkap")
       setTimeout(() => {
         setMsgError(false)

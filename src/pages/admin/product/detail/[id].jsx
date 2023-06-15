@@ -63,7 +63,7 @@ const ProductDetail = () => {
   const submitProduct = async () => {
     console.log({name}, {price}, {stock}, {description}, {image})
 
-    if (!name || !price || !stock || !description) {
+    if (!name || !price || isNaN(stock) || !description) {
       setMsgError("Informasi produk harus diisi dengan lengkap")
       setTimeout(() => {
         setMsgError(false)
@@ -81,7 +81,7 @@ const ProductDetail = () => {
       formData.append('price', price)
       formData.append('stock', stock)
       formData.append('description', description)
-      formData.append('image', image)
+      if (image) formData.append('image', image)
 
       try {
         await axiosJWTAdmin( 
@@ -97,7 +97,7 @@ const ProductDetail = () => {
           }    
         )
         setMsgError(false)
-        setMsgSuccess("Sukses menambahkan produk baru kedalam katalog.")
+        setMsgSuccess("Sukses mengubah data produk.")
 
         setTimeout(() => {
           window.location.reload()
@@ -308,11 +308,11 @@ const ProductDetail = () => {
                   ) :
                   (
                     <>
-                      <button className="px-5 py-2 w-64 rounded-[15px] bg-[#DE5959] text-white hover:shadow-lg"
-                        onClick={() => o}
+                      {/* <button className="px-5 py-2 w-64 rounded-[15px] bg-[#DE5959] text-white hover:shadow-lg"
+                        // onClick={() => o}
                       >
                         Delete Product
-                      </button>
+                      </button> */}
                       <button className="px-5 py-2 w-64 rounded-[15px] border-[1px] border-[#DE5959] text-[#DE5959] hover:shadow-lg"
                         onClick={() => setOnEdit(true)}
                       >
